@@ -37,7 +37,7 @@ class MainMenu(CenteredWindow):
         self.pacman_label.setPixmap(self.pacman)
         self.pacman_label.move(self.width() * 0.52, self.height() * 0.64)
 
-        self.star = QPixmap("other/pictures/star/star1.png")
+        self.star = QPixmap("other/pictures/star/star13.png")
         self.star = self.star.scaled(70, 70,
                                      QtCore.Qt.IgnoreAspectRatio,
                                      QtCore.Qt.SmoothTransformation)
@@ -50,7 +50,8 @@ class MainMenu(CenteredWindow):
         self.main_label.setFont(Fonts.pixel3)
         self.main_label.resize(self.width(), 100)
         self.main_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.main_label.setStyleSheet("font-size: 85px; color: rgb(255, 255, 0);")
+        self.main_label.setStyleSheet("font-size: 95px; color: rgb(255, 255, 0);")
+        self.main_label.move(0, self.height() * 0.03)
 
     def create_interface(self):
         self.login_btn = QPushButton("Играть", self)
