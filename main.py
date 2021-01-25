@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QApplication
 import sys
 
-from GameWindow import GameWindow
-from MainMenu import MainMenu
+from Windows.GameWindow import GameWindow
+from Windows.MainMenu import MainMenu
 
 
 class Game:
