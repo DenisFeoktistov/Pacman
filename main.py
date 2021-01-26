@@ -1,17 +1,20 @@
 from PyQt5.QtWidgets import QApplication
 import sys
 
-from Windows.GameWindow import GameWindow
-from Windows.MainMenu import MainMenu
+from Main.Responder import MainResponder
+from Main.Interface import MainInterface
 
 
 class Game:
     def __init__(self):
-        self.menu = MainMenu()
-        self.game_window = GameWindow()
+        self.responder = MainResponder()
+        self.interface = MainInterface()
+
+        self.interface.set_responder(self.responder)
+        self.responder.set_interface(self.interface)
 
     def show(self):
-        self.menu.show()
+        self.interface.show()
 
 
 if __name__ == '__main__':

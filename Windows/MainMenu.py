@@ -13,7 +13,7 @@ class MainMenu(CenteredWindow):
     def __init__(self, main_interface_class):
         super().__init__(WIDTH, HEIGHT)
 
-        self.main_interface_responder = main_interface_class
+        self.main_interface_class = main_interface_class
         self.tune_window()
         self.create_interface()
 
@@ -89,3 +89,8 @@ class MainMenu(CenteredWindow):
         self.settings_btn.adjustSize()
         self.settings_btn.move((self.width() - self.settings_btn.width()) / 2,
                                self.height() * 0.5)
+
+    def set_responder(self, responder):
+        self.responder = responder
+
+        self.login_btn.clicked.connect(self.responder.play)
