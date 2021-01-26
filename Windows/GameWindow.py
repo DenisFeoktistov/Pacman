@@ -2,5 +2,5 @@ import pygame
 
 
 class GameWindow:
-    def __init__(self):
-        pass
+    def __init__(self, main_interface_class):
+        self.main_interface_class = main_interface_class

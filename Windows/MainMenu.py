@@ -10,9 +10,10 @@ HEIGHT = 600
 
 
 class MainMenu(CenteredWindow):
-    def __init__(self):
+    def __init__(self, main_interface_class):
         super().__init__(WIDTH, HEIGHT)
 
+        self.main_interface_responder = main_interface_class
         self.tune_window()
         self.create_interface()
 
