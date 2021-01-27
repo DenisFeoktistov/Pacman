@@ -8,3 +8,8 @@ class GameWindow:
     def set_responder(self, responder):
         self.responder = responder
 
+    def show(self):
+        pass
+
+    def close(self):
+        pass

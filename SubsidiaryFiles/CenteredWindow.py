@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow
 
-from ScreenSize import SCREENSIZE
+from SubsidiaryFiles.ScreenSize import SCREENSIZE
 
 
 # Этот класс создает окно, которое находится ровно посередине экрана (с разрешением 1440x900).

@@ -1,5 +1,5 @@
-from MainMenuResponder import MainMenuResponder
-from GameWindowResponder import GameWindowResponder
+from Responders.MainMenuResponder import MainMenuResponder
+from Responders.GameWindowResponder import GameWindowResponder
 
 
 class MainResponder:
@@ -11,3 +11,6 @@ class MainResponder:
         self.interface = interface
         self.game_window_responder.set_interface(interface.game_window)
         self.main_menu_responder.set_interface(interface.main_menu)
+
+    def from_menu_to_game(self):
+        self.interface.from_menu_to_game()

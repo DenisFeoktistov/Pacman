@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QApplication
 import sys
 
-from Main.Responder import MainResponder
-from Main.Interface import MainInterface
+from MainClasses.Responder import MainResponder
+from MainClasses.Interface import MainInterface
 
 
 class Game:

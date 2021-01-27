@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QPushButton, QLabel
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
 
-from CenteredWindow import CenteredWindow
-import Fonts
+from SubsidiaryFiles.CenteredWindow import CenteredWindow
+import SubsidiaryFiles.Fonts as Fonts
 
 WIDTH = 450
 HEIGHT = 600
@@ -18,9 +18,9 @@ class MainMenu(CenteredWindow):
         self.create_interface()
 
     def tune_window(self):
-        self.setWindowTitle("Main menu")
+        self.setWindowTitle("MainClasses menu")
 
-        self.back_pixmap = QPixmap("other/pictures/backgrounds/purple_background1.jpg")
+        self.back_pixmap = QPixmap("data/pictures/backgrounds/purple_background1.jpg")
         self.back_pixmap = self.back_pixmap.scaled(self.width() * 3, self.height(),
                                                    QtCore.Qt.IgnoreAspectRatio,
                                                    QtCore.Qt.SmoothTransformation)
@@ -29,7 +29,7 @@ class MainMenu(CenteredWindow):
         self.back_label.setPixmap(self.back_pixmap)
         self.back_label.move(0, 0)
 
-        self.pacman = QPixmap("other/pictures/pacman/pacman5.png")
+        self.pacman = QPixmap("data/pictures/pacman/pacman5.png")
         self.pacman = self.pacman.scaled(170, 170,
                                          QtCore.Qt.IgnoreAspectRatio,
                                          QtCore.Qt.SmoothTransformation)
@@ -38,7 +38,7 @@ class MainMenu(CenteredWindow):
         self.pacman_label.setPixmap(self.pacman)
         self.pacman_label.move(self.width() * 0.52, self.height() * 0.64)
 
-        self.star = QPixmap("other/pictures/star/star13.png")
+        self.star = QPixmap("data/pictures/star/star13.png")
         self.star = self.star.scaled(70, 70,
                                      QtCore.Qt.IgnoreAspectRatio,
                                      QtCore.Qt.SmoothTransformation)
@@ -55,21 +55,21 @@ class MainMenu(CenteredWindow):
         self.main_label.move(0, self.height() * 0.03)
 
     def create_interface(self):
-        self.login_btn = QPushButton("Играть", self)
-        self.login_btn.setFont(Fonts.pixel1)
-        self.login_btn.setStyleSheet(
+        self.play_btn = QPushButton("Играть", self)
+        self.play_btn.setFont(Fonts.pixel1)
+        self.play_btn.setStyleSheet(
             "font-size: 26px; color: rgb(230, 230, 230); border-style: outset; border-width: 3px; "
             "border-radius: 5px; border-color: beige; min-width: 8em; padding: 6px;")
-        self.login_btn.adjustSize()
-        self.login_btn.move((self.width() - self.login_btn.width()) / 2, self.height() * 0.2)
+        self.play_btn.adjustSize()
+        self.play_btn.move((self.width() - self.play_btn.width()) / 2, self.height() * 0.2)
 
-        self.registration_btn = QPushButton("Правила", self)
-        self.registration_btn.setFont(Fonts.pixel1)
-        self.registration_btn.setStyleSheet(
+        self.rules_btn = QPushButton("Правила", self)
+        self.rules_btn.setFont(Fonts.pixel1)
+        self.rules_btn.setStyleSheet(
             "font-size: 26px; color: rgb(230, 230, 230); border-style: outset; border-width: 3px; "
             "border-radius: 5px; border-color: beige; min-width: 8em; padding: 6px;")
-        self.registration_btn.adjustSize()
-        self.registration_btn.move((self.width() - self.registration_btn.width()) / 2,
+        self.rules_btn.adjustSize()
+        self.rules_btn.move((self.width() - self.rules_btn.width()) / 2,
                                    self.height() * 0.3)
 
         self.records_btn = QPushButton("Рекорды", self)
@@ -93,4 +93,7 @@ class MainMenu(CenteredWindow):
     def set_responder(self, responder):
         self.responder = responder
 
-        self.login_btn.clicked.connect(self.responder.play)
+        self.connect_buttons()
+
+    def connect_buttons(self):
+        self.play_btn.clicked.connect(self.responder.play)

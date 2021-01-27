@@ -1,5 +1,5 @@
-from MainMenu import MainMenu
-from GameWindow import GameWindow
+from Windows.MainMenu import MainMenu
+from Windows.GameWindow import GameWindow
 
 
 class MainInterface:
@@ -26,3 +26,7 @@ class MainInterface:
 
     def show(self):
         self.main_menu.show()
+
+    def from_menu_to_game(self):
+        self.close_main_menu()
+        self.show_game_window()
