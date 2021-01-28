@@ -67,7 +67,6 @@ class Maze:
         self.add_borders()
 
     def add_borders(self):
-        print(1)
         for i in range(Maze.WIDTH):
             self.matrix[0][i].set_border("top")
         for i in range(Maze.WIDTH):
