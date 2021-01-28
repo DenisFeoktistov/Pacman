@@ -19,9 +19,15 @@ class Cell:
         self.dict = {"left": self.left, "right": self.right, "top": self.top, "bottom": self.bottom}
 
     def set_border(self, border):
-        try:
-            self.dict[border] = True
-        except Exception:
+        if border == "left":
+            self.left = True
+        elif border == "right":
+            self.right = True
+        elif border == "top":
+            self.top = True
+        elif border == "bottom":
+            self.bottom = True
+        else:
             raise Exception(f"Border {border} is not from the list ['left', 'right', 'top', 'bottom']")
 
     def set_randomly(self, chance):
@@ -58,6 +64,18 @@ class Maze:
         for i in range(Maze.HEIGHT):
             for j in range(Maze.WIDTH):
                 self.matrix[i][j].set_randomly(30)
+        self.add_borders()
+
+    def add_borders(self):
+        print(1)
+        for i in range(Maze.WIDTH):
+            self.matrix[0][i].set_border("top")
+        for i in range(Maze.WIDTH):
+            self.matrix[Maze.HEIGHT - 1][i].set_border("bottom")
+        for i in range(Maze.HEIGHT):
+            self.matrix[i][0].set_border("left")
+        for i in range(Maze.HEIGHT):
+            self.matrix[i][Maze.WIDTH - 1].set_border("right")
 
     def draw(self):
         for i in range(Maze.HEIGHT):
