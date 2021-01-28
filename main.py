@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication
+import pygame
 import sys
 
 from MainClasses.Responder import MainResponder
@@ -18,7 +19,11 @@ class Game:
 
 
 if __name__ == '__main__':
+    pygame.init()
     app = QApplication(sys.argv)
+
     game = Game()
     game.show()
+
+    pygame.quit()
     sys.exit(app.exec())
