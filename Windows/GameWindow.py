@@ -2,7 +2,7 @@ import pygame
 
 
 class GameWindow:
-    size = width, height = 1000, 600
+    SIZE = WIDTH, HEIGHT = 1000, 600
 
     def __init__(self, main_interface_class):
         self.main_interface_class = main_interface_class
@@ -11,7 +11,7 @@ class GameWindow:
         self.responder = responder
 
     def show(self):
-        screen = pygame.display.set_mode(GameWindow.size)
+        screen = pygame.display.set_mode(GameWindow.SIZE)
 
         self.set_up_screen(screen)
 

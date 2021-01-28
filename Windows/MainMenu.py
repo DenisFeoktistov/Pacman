@@ -5,13 +5,12 @@ from PyQt5 import QtCore
 from SubsidiaryFiles.CenteredWindow import CenteredWindow
 import SubsidiaryFiles.Fonts as Fonts
 
-WIDTH = 450
-HEIGHT = 600
-
 
 class MainMenu(CenteredWindow):
+    WIDTH, HEIGHT = 450, 600
+
     def __init__(self, main_interface_class):
-        super().__init__(WIDTH, HEIGHT)
+        super().__init__(MainMenu.WIDTH, MainMenu.HEIGHT)
 
         self.main_interface_class = main_interface_class
         self.tune_window()

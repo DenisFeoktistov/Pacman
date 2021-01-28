@@ -1,12 +1,14 @@
 class ScreenSize:
+    WIDTH, HEIGHT = 1440, 900
+
     def __init__(self):
         pass
 
     def width(self):
-        return 1440
+        return ScreenSize.WIDTH
 
     def height(self):
-        return 900 - 124  # учитывается нижняя панелька
+        return ScreenSize.HEIGHT - 124  # учитывается нижняя панелька
 
 
 SCREENSIZE = ScreenSize()

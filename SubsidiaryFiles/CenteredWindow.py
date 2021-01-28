@@ -16,11 +16,11 @@ from SubsidiaryFiles.ScreenSize import SCREENSIZE
 # Вашей игре, достаточно в ScreenSize ввести Ваше разрешение, а значение переменно сделать true.
 
 class CenteredWindow(QMainWindow):
-    centered = False
+    CENTERED = False
 
     def __init__(self, width, height):
         super().__init__()
         self.setFixedSize(width, height)
-        if CenteredWindow.centered:
+        if CenteredWindow.CENTERED:
             self.move((SCREENSIZE.width() - self.width()) / 2,
                       (SCREENSIZE.height() - self.height()) / 2)
