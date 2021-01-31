@@ -3,13 +3,14 @@ import pygame
 
 
 class Cell:
-    WIDTH, HEIGHT = 50, 50
     COLOR = (138, 43, 226)
     LINE_WIDTH = 7
 
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, width, height, screen):
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
         self.screen = screen
 
         self.left = True
@@ -38,15 +39,15 @@ class Cell:
 
     def draw(self):
         if self.left:
-            pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y), (self.x, self.y + Cell.HEIGHT), Cell.LINE_WIDTH)
+            pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y), (self.x, self.y + self.height), Cell.LINE_WIDTH)
         if self.right:
-            pygame.draw.line(self.screen, Cell.COLOR, (self.x + self.WIDTH, self.y),
-                             (self.x + self.WIDTH, self.y + Cell.HEIGHT), Cell.LINE_WIDTH)
+            pygame.draw.line(self.screen, Cell.COLOR, (self.x + self.width, self.y),
+                             (self.x + self.width, self.y + self.height), Cell.LINE_WIDTH)
         if self.top:
-            pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y), (self.x + Cell.WIDTH, self.y), Cell.LINE_WIDTH)
+            pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y), (self.x + self.width, self.y), Cell.LINE_WIDTH)
         if self.bottom:
-            pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y + Cell.HEIGHT),
-                             (self.x + Cell.WIDTH, self.y + Cell.HEIGHT), Cell.LINE_WIDTH)
+            pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y + self.height),
+                             (self.x + self.width, self.y + self.height), Cell.LINE_WIDTH)
 
     def get_left_border(self):
         return self.left
@@ -62,17 +63,20 @@ class Cell:
 
 
 class Maze:
-    WIDTH, HEIGHT = 20, 12
     DFS_COLOR = 1
     CHANCE_VALUE = 40
 
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, width, height, cell_width, cell_height, screen):
         self.x = x
         self.y = y
+
+        self.width = width
+        self.height = height
+
         self.screen = screen
 
-        self.matrix = [[Cell(self.x + Cell.WIDTH * j, self.y + Cell.HEIGHT * i, self.screen) for j in range(Maze.WIDTH)]
-                       for i in range(Maze.HEIGHT)]
+        self.matrix = [[Cell(self.x + cell_width * j, self.y + cell_height * i, cell_width, cell_height, self.screen) for j in range(self.width)]
+                       for i in range(self.height)]
 
     def generate(self):
         # I am sure, that's my algorithm isn't perfect, but I found it the easiest.
@@ -95,8 +99,8 @@ class Maze:
         self.add_borders()
 
     def regenerate_some_cells(self, color_matrix):
-        for i in range(Maze.HEIGHT):
-            for j in range(Maze.WIDTH):
+        for i in range(self.height):
+            for j in range(self.width):
                 if color_matrix[i][j] != Maze.DFS_COLOR:
                     self.matrix[i][j].set_randomly(Maze.CHANCE_VALUE)
 
@@ -124,8 +128,8 @@ class Maze:
         self.DFS(0, 0, nearby, color_matrix)  # coloring
 
         # then checking
-        for j in range(Maze.WIDTH):
-            for i in range(Maze.HEIGHT):
+        for j in range(self.width):
+            for i in range(self.height):
                 if color_matrix[i][j] != Maze.DFS_COLOR:
                     return False
         return True
@@ -138,8 +142,8 @@ class Maze:
                 self.DFS(next[0], next[1], nearby, color_matrix)
 
     def remove_some_boards_in_maze(self, color_matrix):
-        for i in range(Maze.HEIGHT):
-            for j in range(Maze.WIDTH):
+        for i in range(self.height):
+            for j in range(self.width):
                 if color_matrix[i][j] != Maze.DFS_COLOR:
                     self.remove_some_boards_for_cell(i, j)
 
@@ -159,37 +163,37 @@ class Maze:
             self.get_bottom_cell(*actual).set_bottom_border(values[3])
 
     def update_nearby_list(self):
-        return [[self.get_nearby_cells(i, j) for j in range(Maze.WIDTH)] for i in range(Maze.HEIGHT)]
+        return [[self.get_nearby_cells(i, j) for j in range(self.width)] for i in range(self.height)]
 
     def update_color_matrix(self):
-        return [[-1 for j in range(Maze.WIDTH)] for i in range(Maze.HEIGHT)]
+        return [[-1 for j in range(self.width)] for i in range(self.height)]
 
     def add_borders(self):
-        for i in range(Maze.WIDTH):
+        for i in range(self.width):
             self.matrix[0][i].set_top_border(True)
-        for i in range(Maze.WIDTH):
-            self.matrix[Maze.HEIGHT - 1][i].set_bottom_border(True)
-        for i in range(Maze.HEIGHT):
+        for i in range(self.width):
+            self.matrix[self.height - 1][i].set_bottom_border(True)
+        for i in range(self.height):
             self.matrix[i][0].set_left_border(True)
-        for i in range(Maze.HEIGHT):
-            self.matrix[i][Maze.WIDTH - 1].set_right_border(True)
+        for i in range(self.height):
+            self.matrix[i][self.width - 1].set_right_border(True)
 
     def draw(self):
-        for i in range(Maze.HEIGHT):
-            for j in range(Maze.WIDTH):
+        for i in range(self.height):
+            for j in range(self.width):
                 self.matrix[i][j].draw()
 
     def has_left_cell(self, i, j):
         return j > 0
 
     def has_right_cell(self, i, j):
-        return j < Maze.WIDTH - 1
+        return j < self.width - 1
 
     def has_top_cell(self, i, j):
         return i > 0
 
     def has_bottom_cell(self, i, j):
-        return i < Maze.HEIGHT - 1
+        return i < self.height - 1
 
     def get_right_cell(self, i, j):
         return self.matrix[i][j + 1]
