@@ -6,7 +6,7 @@ from GameFiles.Game import Game
 
 class GameWindow:
     SIZE = WIDTH, HEIGHT = 1000, 600
-    FPS = 35
+    FPS = 120
 
     def __init__(self, main_interface_class):
         self.main_interface_class = main_interface_class
@@ -31,6 +31,7 @@ class GameWindow:
                 if event.type == pygame.QUIT:
                     running = False
             screen.fill((0, 0, 0))
+            game.update()
             game.draw(screen)
             pygame.display.flip()
 
