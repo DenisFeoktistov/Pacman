@@ -17,25 +17,6 @@ class Cell:
         self.top = True
         self.bottom = True
 
-    def set_left_border(self, value):
-        self.left = value
-
-    def set_right_border(self, value):
-        self.right = value
-
-    def set_top_border(self, value):
-        self.top = value
-
-    def set_bottom_border(self, value):
-        self.bottom = value
-
-    def set_randomly(self, chance):
-        values = [random.choices([True, False], weights=[chance, 100 - chance], k=1)[0] for _ in range(4)]
-        self.left = values[0]
-        self.right = values[1]
-        self.top = values[2]
-        self.bottom = values[3]
-
     def draw(self):
         if self.left:
             pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y), (self.x, self.y + Cell.HEIGHT), Cell.LINE_WIDTH)
@@ -48,6 +29,13 @@ class Cell:
             pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y + Cell.HEIGHT),
                              (self.x + Cell.WIDTH, self.y + Cell.HEIGHT), Cell.LINE_WIDTH)
 
+    def set_randomly(self, chance):
+        values = [random.choices([True, False], weights=[chance, 100 - chance], k=1)[0] for _ in range(4)]
+        self.left = values[0]
+        self.right = values[1]
+        self.top = values[2]
+        self.bottom = values[3]
+
     def get_left_border(self):
         return self.left
 
@@ -59,6 +47,18 @@ class Cell:
 
     def get_bottom_border(self):
         return self.bottom
+
+    def set_left_border(self, value):
+        self.left = value
+
+    def set_right_border(self, value):
+        self.right = value
+
+    def set_top_border(self, value):
+        self.top = value
+
+    def set_bottom_border(self, value):
+        self.bottom = value
 
 
 class Maze:
