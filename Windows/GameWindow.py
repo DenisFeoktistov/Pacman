@@ -28,6 +28,8 @@ class GameWindow:
         while running:
             time.tick(self.FPS)
             for event in pygame.event.get():
+                game.handle(event)
+
                 if event.type == pygame.QUIT:
                     running = False
             screen.fill((0, 0, 0))
