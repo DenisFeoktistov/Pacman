@@ -2,10 +2,11 @@ import pygame
 
 
 class GeneralSprite(pygame.sprite.Sprite):
-    def __init__(self, x, y, sprite_size, cycle_iterations, switches_for_cycle, cycle_time, default_frame, frames):
+    def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_iterations, switches_for_cycle, cycle_time, default_frame, frames):
         super().__init__()
 
-        self.sprite_size = sprite_size
+        self.sprite_size_x = sprite_size_x
+        self.sprite_size_y = sprite_size_y
 
         self.image_counter = 0
         self.frames = frames
@@ -108,4 +109,4 @@ class GeneralSprite(pygame.sprite.Sprite):
 
     def transform_image(self):
         self.image.set_colorkey(self.image.get_at((0, 0)))
-        self.image = pygame.transform.scale(self.image, (self.sprite_size, self.sprite_size))
+        self.image = pygame.transform.scale(self.image, (self.sprite_size_x, self.sprite_size_y))
