@@ -18,25 +18,6 @@ class Cell:
         self.top = True
         self.bottom = True
 
-    def set_left_border(self, value):
-        self.left = value
-
-    def set_right_border(self, value):
-        self.right = value
-
-    def set_top_border(self, value):
-        self.top = value
-
-    def set_bottom_border(self, value):
-        self.bottom = value
-
-    def set_randomly(self, chance):
-        values = [random.choices([True, False], weights=[chance, 100 - chance], k=1)[0] for _ in range(4)]
-        self.left = values[0]
-        self.right = values[1]
-        self.top = values[2]
-        self.bottom = values[3]
-
     def draw(self):
         if self.left:
             pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y), (self.x, self.y + self.height), Cell.LINE_WIDTH)
@@ -48,6 +29,13 @@ class Cell:
         if self.bottom:
             pygame.draw.line(self.screen, Cell.COLOR, (self.x, self.y + self.height),
                              (self.x + self.width, self.y + self.height), Cell.LINE_WIDTH)
+
+    def set_randomly(self, chance):
+        values = [random.choices([True, False], weights=[chance, 100 - chance], k=1)[0] for _ in range(4)]
+        self.left = values[0]
+        self.right = values[1]
+        self.top = values[2]
+        self.bottom = values[3]
 
     def get_left_border(self):
         return self.left
@@ -61,6 +49,18 @@ class Cell:
     def get_bottom_border(self):
         return self.bottom
 
+    def set_left_border(self, value):
+        self.left = value
+
+    def set_right_border(self, value):
+        self.right = value
+
+    def set_top_border(self, value):
+        self.top = value
+
+    def set_bottom_border(self, value):
+        self.bottom = value
+
 
 class Maze:
     DFS_COLOR = 1
@@ -72,11 +72,14 @@ class Maze:
 
         self.width = width
         self.height = height
+        self.cell_width = cell_width
+        self.cell_height = cell_height
 
         self.screen = screen
 
-        self.matrix = [[Cell(self.x + cell_width * j, self.y + cell_height * i, cell_width, cell_height, self.screen) for j in range(self.width)]
-                       for i in range(self.height)]
+        self.matrix = [[Cell(self.x + cell_width * j, self.y + cell_height * i, cell_width, cell_height, self.screen)
+                        for j in range(self.width)] for i in range(self.height)]
+        self.nearby = self.update_nearby_list()
 
     def generate(self):
         # I am sure, that's my algorithm isn't perfect, but I found it the easiest.
@@ -87,14 +90,14 @@ class Maze:
 
         # I am using DFS in this, so i need color matrix and list of related vertices.
         color_matrix = self.update_color_matrix()
-        nearby = self.update_nearby_list()
+        self.nearby = self.update_nearby_list()
 
-        while not self.check(nearby, color_matrix):
+        while not self.check(color_matrix):
             self.remove_some_boards_in_maze(color_matrix)
             self.regenerate_some_cells(color_matrix)
 
             color_matrix = self.update_color_matrix()
-            nearby = self.update_nearby_list()
+            self.nearby = self.update_nearby_list()
 
         self.add_borders()
 
@@ -124,8 +127,8 @@ class Maze:
                 answer.append((i + 1, j))
         return answer
 
-    def check(self, nearby, color_matrix):
-        self.DFS(0, 0, nearby, color_matrix)  # coloring
+    def check(self, color_matrix):
+        self.DFS(0, 0, color_matrix)  # coloring
 
         # then checking
         for j in range(self.width):
@@ -134,12 +137,12 @@ class Maze:
                     return False
         return True
 
-    def DFS(self, i, j, nearby, color_matrix):
+    def DFS(self, i, j, color_matrix):
         # simple DFS
         color_matrix[i][j] = Maze.DFS_COLOR
-        for next in nearby[i][j]:
+        for next in self.nearby[i][j]:
             if color_matrix[next[0]][next[1]] != Maze.DFS_COLOR:
-                self.DFS(next[0], next[1], nearby, color_matrix)
+                self.DFS(next[0], next[1], color_matrix)
 
     def remove_some_boards_in_maze(self, color_matrix):
         for i in range(self.height):
