@@ -37,6 +37,7 @@ class Cell:
         self.top = values[2]
         self.bottom = values[3]
 
+    # actually, it is ok to return a bool, but method is better, at least because its name is more understandably
     def get_left_border(self):
         return self.left
 

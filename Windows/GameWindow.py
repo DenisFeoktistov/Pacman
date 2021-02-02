@@ -6,6 +6,7 @@ from GameFiles.Game import Game
 
 class GameWindow:
     SIZE = WIDTH, HEIGHT = 1000, 600
+    FPS = 120
 
     def __init__(self, main_interface_class):
         self.main_interface_class = main_interface_class
@@ -22,13 +23,18 @@ class GameWindow:
         self.start_main_cycle(screen, game)
 
     def start_main_cycle(self, screen, game):
+        time = pygame.time.Clock()
         running = True
         while running:
+            time.tick(self.FPS)
             for event in pygame.event.get():
+                game.handle(event)
+
                 if event.type == pygame.QUIT:
                     running = False
             screen.fill((0, 0, 0))
-            game.draw()
+            game.update()
+            game.draw(screen)
             pygame.display.flip()
 
     def set_up_screen(self, screen):
