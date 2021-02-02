@@ -39,10 +39,13 @@ class GeneralSprite(pygame.sprite.Sprite):
             self.check_cycle()
 
     def start_moving(self, x, y):
+        # it is better to do this check, because it can be something really bad without it
         if not self.cycle:
             self.start_cycle(x, y)
 
     def in_cycle(self):
+        # returning bool is ok as attribute, because it is primitive type and returning value isn't a link, but it is
+        # better, we think, to use methods
         return self.cycle
 
     def start_cycle(self, x, y):

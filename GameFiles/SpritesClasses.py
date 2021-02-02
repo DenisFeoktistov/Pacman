@@ -12,7 +12,14 @@ class PacmanSprite(GeneralSprite):
                          switches_for_cycle=4, cycle_time=cycle_time, default_frame=default_frame, frames=frames)
 
 
-class RedGhostSprite(GeneralSprite):
+class GhostSprite(GeneralSprite):
+    # It is empty class, actually, but we think that it is better to use it
+    def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time, frames):
+        super().__init__(x, y, sprite_size_x=sprite_size_x, sprite_size_y=sprite_size_y, cycle_iterations=12,
+                         switches_for_cycle=4, cycle_time=cycle_time, default_frame=default_frame, frames=frames)
+
+
+class RedGhostSprite(GhostSprite):
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time):
         frames = (('data/sprites/ghosts/red_right1.png', 'data/sprites/ghosts/red_right2.png'),
                   ('data/sprites/ghosts/red_up1.png', 'data/sprites/ghosts/red_up2.png'),
@@ -23,7 +30,7 @@ class RedGhostSprite(GeneralSprite):
                          switches_for_cycle=4, cycle_time=cycle_time, default_frame=default_frame, frames=frames)
 
 
-class PinkGhostSprite(GeneralSprite):
+class PinkGhostSprite(GhostSprite):
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time):
         frames = (('data/sprites/ghosts/pink_right1.png', 'data/sprites/ghosts/pink_right2.png'),
                   ('data/sprites/ghosts/pink_up1.png', 'data/sprites/ghosts/pink_up2.png'),
@@ -34,7 +41,7 @@ class PinkGhostSprite(GeneralSprite):
                          switches_for_cycle=4, cycle_time=cycle_time, default_frame=default_frame, frames=frames)
 
 
-class BlueGhostSprite(GeneralSprite):
+class BlueGhostSprite(GhostSprite):
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time):
         frames = (('data/sprites/ghosts/blue_right1.png', 'data/sprites/ghosts/blue_right2.png'),
                   ('data/sprites/ghosts/blue_up1.png', 'data/sprites/ghosts/blue_up2.png'),
@@ -45,7 +52,7 @@ class BlueGhostSprite(GeneralSprite):
                          switches_for_cycle=4, cycle_time=cycle_time, default_frame=default_frame, frames=frames)
 
 
-class OrangeGhostSprite(GeneralSprite):
+class OrangeGhostSprite(GhostSprite):
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time):
         frames = (('data/sprites/ghosts/orange_right1.png', 'data/sprites/ghosts/orange_right2.png'),
                   ('data/sprites/ghosts/orange_up1.png', 'data/sprites/ghosts/orange_up2.png'),
