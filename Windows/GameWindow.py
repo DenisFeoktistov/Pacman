@@ -10,6 +10,8 @@ class GameWindow:
 
     def __init__(self, main_interface_class):
         self.main_interface_class = main_interface_class
+        
+        self.create_menu_button()
 
     def set_responder(self, responder):
         self.responder = responder
@@ -32,13 +34,26 @@ class GameWindow:
 
                 if event.type == pygame.QUIT:
                     running = False
-            screen.fill((0, 0, 0))
+            self.set_up_screen(screen)
             game.update()
             game.draw(screen)
             pygame.display.flip()
 
     def set_up_screen(self, screen):
         screen.fill((0, 0, 0))
+
+        self.show_menu(screen)
+
+    def show_menu(self, screen):
+        screen.blit(self.menu_surface, self.menu_rect)
+
+    def create_menu_button(self):
+        self.menu_surface = pygame.image.load('data/pictures/menu_button/menu4.png')
+        self.menu_surface = pygame.transform.scale(self.menu_surface, (160, 45))
+        self.menu_rect = self.menu_surface.get_rect()
+
+        self.menu_rect.x = 825
+        self.menu_rect.y = 27
 
     def close(self):
         pygame.display.quit()
