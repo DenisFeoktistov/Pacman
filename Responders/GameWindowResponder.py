@@ -4,3 +4,6 @@ class GameWindowResponder:
 
     def set_interface(self, interface):
         self.interface = interface
+
+    def pause(self):
+        return 0

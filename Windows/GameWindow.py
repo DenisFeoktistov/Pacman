@@ -13,6 +13,8 @@ class GameWindow:
 
         self.create_pause_button()
 
+        self.paused = False
+
     def set_responder(self, responder):
         self.responder = responder
 
@@ -28,16 +30,21 @@ class GameWindow:
         time = pygame.time.Clock()
         running = True
         while running:
-            time.tick(self.FPS)
-            for event in pygame.event.get():
-                game.handle(event)
-
-                if event.type == pygame.QUIT:
-                    running = False
-            self.set_up_screen(screen)
-            game.update()
-            game.draw(screen)
-            pygame.display.flip()
+            if not self.paused:
+                time.tick(self.FPS)
+                for event in pygame.event.get():
+                    game.handle(event)
+                    if event.type == pygame.QUIT:
+                        running = False
+                    if self.pause_check(event):
+                        self.paused = True
+                        self.responder.pause()
+                self.set_up_screen(screen)
+                game.update()
+                game.draw(screen)
+                pygame.display.flip()
+            else:
+                return 0
 
     def set_up_screen(self, screen):
         screen.fill((0, 0, 0))
@@ -54,6 +61,11 @@ class GameWindow:
 
         self.pause_rect.x = 825
         self.pause_rect.y = 27
+
+    def pause_check(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+            return self.pause_rect.collidepoint(mouse_pos)
 
     def close(self):
         pygame.display.quit()
