@@ -6,13 +6,13 @@ from SubsidiaryFiles.CenteredWindow import CenteredWindow
 import SubsidiaryFiles.Fonts as Fonts
 
 
-class MainMenu(CenteredWindow):
+class PauseMenu(CenteredWindow):
     WIDTH, HEIGHT = 450, 600
 
-    def __init__(self, main_interface):
-        super().__init__(MainMenu.WIDTH, MainMenu.HEIGHT)
+    def __init__(self, main_interface_class):
+        super().__init__(PauseMenu.WIDTH, PauseMenu.HEIGHT)
 
-        self.main_interface = main_interface
+        self.main_interface_class = main_interface_class
         self.tune_window()
         self.create_interface()
 
@@ -54,40 +54,22 @@ class MainMenu(CenteredWindow):
         self.main_label.move(0, self.height() * 0.03)
 
     def create_interface(self):
-        self.play_btn = QPushButton("Играть", self)
-        self.play_btn.setFont(Fonts.pixel1)
-        self.play_btn.setStyleSheet(
+        self.continue_btn = QPushButton("Продолжить игру", self)
+        self.continue_btn.setFont(Fonts.pixel1)
+        self.continue_btn.setStyleSheet(
             "font-size: 26px; color: rgb(230, 230, 230); border-style: outset; border-width: 3px; "
             "border-radius: 5px; border-color: beige; min-width: 8em; padding: 6px;")
-        self.play_btn.adjustSize()
-        self.play_btn.move((self.width() - self.play_btn.width()) / 2, self.height() * 0.2)
+        self.continue_btn.adjustSize()
+        self.continue_btn.move((self.width() - self.continue_btn.width()) / 2, self.height() * 0.2)
 
-        self.rules_btn = QPushButton("Правила", self)
-        self.rules_btn.setFont(Fonts.pixel1)
-        self.rules_btn.setStyleSheet(
+        self.return_btn = QPushButton("Вернуться в главное меню", self)
+        self.return_btn.setFont(Fonts.pixel1)
+        self.return_btn.setStyleSheet(
             "font-size: 26px; color: rgb(230, 230, 230); border-style: outset; border-width: 3px; "
             "border-radius: 5px; border-color: beige; min-width: 8em; padding: 6px;")
-        self.rules_btn.adjustSize()
-        self.rules_btn.move((self.width() - self.rules_btn.width()) / 2,
-                                   self.height() * 0.3)
-
-        self.records_btn = QPushButton("Рекорды", self)
-        self.records_btn.setFont(Fonts.pixel1)
-        self.records_btn.setStyleSheet(
-            "font-size: 26px; color: rgb(230, 230, 230); border-style: outset; border-width: 3px; "
-            "border-radius: 5px; border-color: beige; min-width: 8em; padding: 6px;")
-        self.records_btn.adjustSize()
-        self.records_btn.move((self.width() - self.records_btn.width()) / 2,
-                              self.height() * 0.4)
-
-        self.settings_btn = QPushButton("Настройки", self)
-        self.settings_btn.setFont(Fonts.pixel1)
-        self.settings_btn.setStyleSheet(
-            "font-size: 26px; color: rgb(230, 230, 230); border-style: outset; border-width: 3px; "
-            "border-radius: 5px; border-color: beige; min-width: 8em; padding: 6px;")
-        self.settings_btn.adjustSize()
-        self.settings_btn.move((self.width() - self.settings_btn.width()) / 2,
-                               self.height() * 0.5)
+        self.return_btn.adjustSize()
+        self.return_btn.move((self.width() - self.return_btn.width()) / 2,
+                            self.height() * 0.3)
 
     def set_responder(self, responder):
         self.responder = responder
@@ -95,4 +77,14 @@ class MainMenu(CenteredWindow):
         self.connect_buttons()
 
     def connect_buttons(self):
-        self.play_btn.clicked.connect(self.responder.play)
+        self.continue_btn.clicked.connect(self.responder.continue_play)
+        self.return_btn.clicked.connect(self.responder.return_to_menu)
+
+    def show(self):
+        print(8)
+        super().show()
+
+    def close(self):
+        print(7)
+        super().close()
+        print(7)

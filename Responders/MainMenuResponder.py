@@ -6,4 +6,5 @@ class MainMenuResponder:
         self.interface = interface
 
     def play(self):
-        self.main_responder.from_menu_to_game()
+        self.interface.main_interface.close_main_menu()
+        self.interface.main_interface.show_game_window()

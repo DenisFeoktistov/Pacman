@@ -8,43 +8,43 @@ class GameWindow:
     SIZE = WIDTH, HEIGHT = 1000, 600
     FPS = 120
 
-    def __init__(self, main_interface_class):
-        self.main_interface_class = main_interface_class
+    def __init__(self, main_interface):
+        self.main_interface = main_interface
 
         self.create_pause_button()
 
-        self.paused = False
+        self.running = True
 
     def set_responder(self, responder):
         self.responder = responder
 
     def show(self):
-        screen = pygame.display.set_mode(GameWindow.SIZE)
-        game = Game(screen)
+        self.screen = pygame.display.set_mode(GameWindow.SIZE)
+        self.game = Game(self.screen)
 
-        self.set_up_screen(screen)
+        self.set_up_screen(self.screen)
 
-        self.start_main_cycle(screen, game)
+        self.start_main_cycle()
 
-    def start_main_cycle(self, screen, game):
+    def start_main_cycle(self):
         time = pygame.time.Clock()
-        running = True
-        while running:
-            if not self.paused:
-                time.tick(self.FPS)
-                for event in pygame.event.get():
-                    game.handle(event)
-                    if event.type == pygame.QUIT:
-                        running = False
-                    if self.pause_check(event):
-                        self.paused = True
-                        self.responder.pause()
-                self.set_up_screen(screen)
-                game.update()
-                game.draw(screen)
+        while self.running:
+            time.tick(self.FPS)
+            for event in pygame.event.get():
+                if not self.running:
+                    break
+                self.game.handle(event)
+                if event.type == pygame.QUIT:
+                    self.running = False
+                    break
+                if self.pause_check(event):
+                    self.responder.pause()
+                    break
+            if self.running:
+                self.set_up_screen(self.screen)
+                self.game.update()
+                self.game.draw(self.screen)
                 pygame.display.flip()
-            else:
-                return 0
 
     def set_up_screen(self, screen):
         screen.fill((0, 0, 0))
@@ -69,3 +69,4 @@ class GameWindow:
 
     def close(self):
         pygame.display.quit()
+
