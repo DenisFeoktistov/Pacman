@@ -32,13 +32,25 @@ class GameWindow:
 
                 if event.type == pygame.QUIT:
                     running = False
-            screen.fill((0, 0, 0))
+            self.set_up_screen(screen)
             game.update()
             game.draw(screen)
             pygame.display.flip()
 
     def set_up_screen(self, screen):
         screen.fill((0, 0, 0))
+
+        self.create_pause_button(screen)
+
+    def create_pause_button(self, screen):
+        self.pause_surface = pygame.image.load('data/pictures/pause/pause4.png')
+        self.pause_surface = pygame.transform.scale(self.pause_surface, (160, 45))
+        self.pause_rect = self.pause_surface.get_rect()
+
+        self.pause_rect.x = 825
+        self.pause_rect.y = 27
+
+        screen.blit(self.pause_surface, self.pause_rect)
 
     def close(self):
         pygame.display.quit()
