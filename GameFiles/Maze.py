@@ -3,7 +3,7 @@ import pygame
 
 
 class Cell:
-    COLOR = (30, 170, 215)
+    COLOR = (138, 43, 226)
     LINE_WIDTH = 7
 
     def __init__(self, x, y, width, height, screen):
