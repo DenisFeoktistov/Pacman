@@ -2,7 +2,8 @@ import pygame
 
 
 class GeneralSprite(pygame.sprite.Sprite):
-    def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_iterations, switches_for_cycle, cycle_time, default_frame, frames):
+    def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_iterations, switches_for_cycle, cycle_time,
+                 default_frame, frames):
         super().__init__()
 
         self.sprite_size_x = sprite_size_x
