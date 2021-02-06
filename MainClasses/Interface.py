@@ -30,3 +30,6 @@ class MainInterface:
     def from_menu_to_game(self):
         self.close_main_menu()
         self.show_game_window()
+
+    def from_game_to_menu(self):
+        self.show_main_menu()
