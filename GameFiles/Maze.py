@@ -67,7 +67,7 @@ class Maze:
     DFS_COLOR = 1
     CHANCE_VALUE = 40
 
-    def __init__(self, x, y, width, height, cell_width, cell_height, screen):
+    def __init__(self, x, y, width, height, cell_width, cell_height, screen, game):
         self.x = x
         self.y = y
 
@@ -77,6 +77,7 @@ class Maze:
         self.cell_height = cell_height
 
         self.screen = screen
+        self.game = game
 
         self.matrix = [[Cell(self.x + cell_width * j, self.y + cell_height * i, cell_width, cell_height, self.screen)
                         for j in range(self.width)] for i in range(self.height)]
@@ -220,16 +221,17 @@ class Maze:
         queue = list()
         queue.append((i1, j1))
 
-        while not queue:
-            for nearby in [queue[0][0]][queue[0][1]]:
+        while queue:
+            actual = queue.pop(0)
+            for nearby in self.nearby[actual[0]][actual[1]]:
                 if not visited[nearby[0]][nearby[1]]:
-                    queue.append(nearby)
+                    queue.append((nearby[0], nearby[1]))
                     visited[nearby[0]][nearby[1]] = True
-                    prev[i1][j1] = queue[0]
-            queue.pop(0)
+                    prev[nearby[0]][nearby[1]] = actual
 
         while not (i2, j2) == (i1, j1):
             way.append((i2, j2))
             i2, j2 = prev[i2][j2]
 
+        way.reverse()
         return way
