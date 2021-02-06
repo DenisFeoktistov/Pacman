@@ -210,3 +210,26 @@ class Maze:
 
     def get_bottom_cell(self, i, j):
         return self.matrix[i + 1][j]
+
+    def way(self, i1, j1, i2, j2):
+        way = list()
+
+        visited = [[False for j in range(self.width)] for i in range(self.height)]
+        visited[i1][j1] = True
+        prev = [[-1 for j in range(self.width)] for i in range(self.height)]
+        queue = list()
+        queue.append((i1, j1))
+
+        while not queue:
+            for nearby in [queue[0][0]][queue[0][1]]:
+                if not visited[nearby[0]][nearby[1]]:
+                    queue.append(nearby)
+                    visited[nearby[0]][nearby[1]] = True
+                    prev[i1][j1] = queue[0]
+            queue.pop(0)
+
+        while not (i2, j2) == (i1, j1):
+            way.append((i2, j2))
+            i2, j2 = prev[i2][j2]
+
+        return way
