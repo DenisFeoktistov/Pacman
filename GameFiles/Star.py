@@ -18,4 +18,3 @@ class Star(pygame.sprite.Sprite):
     def positioning(self, i, j):
         self.rect.x = self.maze.x + (self.maze.cell_width * j) + ((self.maze.cell_width - self.width) // 2)
         self.rect.y = self.maze.y + (self.maze.cell_height * i) + ((self.maze.cell_height - self.width) // 2)
-        print(1)
