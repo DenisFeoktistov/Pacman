@@ -65,9 +65,8 @@ class Cell:
 
 class Maze:
     DFS_COLOR = 1
-    CHANCE_VALUE = 40
 
-    def __init__(self, x, y, width, height, cell_width, cell_height, screen, game):
+    def __init__(self, x, y, width, height, cell_width, cell_height, screen, game, density):
         self.x = x
         self.y = y
 
@@ -82,6 +81,8 @@ class Maze:
         self.matrix = [[Cell(self.x + cell_width * j, self.y + cell_height * i, cell_width, cell_height, self.screen)
                         for j in range(self.width)] for i in range(self.height)]
         self.nearby = self.update_nearby_list()
+
+        self.density = density
 
     def generate(self):
         # I am sure, that's my algorithm isn't perfect, but I found it the easiest.
@@ -107,7 +108,7 @@ class Maze:
         for i in range(self.height):
             for j in range(self.width):
                 if color_matrix[i][j] != Maze.DFS_COLOR:
-                    self.matrix[i][j].set_randomly(Maze.CHANCE_VALUE)
+                    self.matrix[i][j].set_randomly(self.density)
 
     def get_nearby_cells(self, i, j):
         # Maybe it is a little bit strange, but I don't find a way to improve it
@@ -154,7 +155,7 @@ class Maze:
 
     def remove_some_boards_for_cell(self, i, j):
         # Maybe it is a little bit strange, but I don't find a way to improve it
-        chance = Maze.CHANCE_VALUE
+        chance = self.density
         values = [random.choices([True, False], weights=[chance, 100 - chance], k=1)[0] for _ in range(4)]
 
         actual = i, j

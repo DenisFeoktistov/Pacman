@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 
 from GameFiles.Maze import Maze
 from GameFiles.Pacman import MazePacman
@@ -12,21 +13,13 @@ class Game:
         # We use 12 *, just because it is better for game. If you choose something like 77 or 113, game will be started,
         # but you can find some problems, because of float numbers, that will be in GeneralSprite.
         self.maze = Maze(x=20, y=100, height=8, width=16, cell_width=12 * 5, cell_height=12 * 5, screen=screen,
-                         game=self)
+                         density=40, game=self)
         self.maze.generate()
 
         self.pacman = MazePacman(i=0, j=0, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, maze=self.maze)
         self.pacman_sprite = pygame.sprite.GroupSingle(self.pacman)
 
-        self.ghosts = list()
-        self.ghost_sprites = pygame.sprite.Group()
-
-        self.ghosts_colors = ["red", "blue"]
-        for color in self.ghosts_colors:
-            self.ghosts.append(
-                MazeGhost(i=5, j=10, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, maze=self.maze,
-                          color=color))
-            self.ghost_sprites.add(self.ghosts[-1])
+        self.create_ghosts()
 
     def draw(self, screen):
         self.maze.draw()
@@ -41,3 +34,20 @@ class Game:
         self.pacman.handle(event)
         for ghost in self.ghosts:
             ghost.update()
+
+    def create_ghosts(self):
+        self.ghosts = list()
+        self.ghost_sprites = pygame.sprite.Group()
+
+        ghosts_colors = ["red", "blue", "orange", "pink"]
+        max_precisions = [2, 4, 7, 10]
+        min_ways = [15, 13, 10, 7]
+        recount_times = [randint(3, 7) for i in range(4)]
+
+        info = [(ghosts_colors[i], max_precisions[i], min_ways[i], recount_times[i]) for i in range(4)]
+        for color, precision, min_way, recount_time in info:
+            i, j = self.responder.generate_ghost_place(min_way)
+            self.ghosts.append(
+                MazeGhost(i=i, j=j, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 32, maze=self.maze,
+                          color=color, max_precision=precision, recount_time=recount_time))
+            self.ghost_sprites.add(self.ghosts[-1])
