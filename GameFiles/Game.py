@@ -10,22 +10,27 @@ from Responders.GameResponder import GameResponder
 
 class Game:
     def __init__(self, screen):
+        self.ended = False
+
         self.score = 0
         self.responder = GameResponder(self)
+
         self.create_maze(screen)
         self.create_pacman()
         self.create_ghosts()
         self.create_stars()
 
     def create_stars(self):
+        self.stars = list()
         self.star_sprites = pygame.sprite.Group()
         for i in range(self.maze.height):
             for j in range(self.maze.width):
                 star = Star(i, j, width=8, maze=self.maze)
                 self.star_sprites.add(star)
+                self.stars.append(star)
 
     def create_pacman(self):
-        self.pacman = MazePacman(i=0, j=0, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, maze=self.maze)
+        self.pacman = MazePacman(i=0, j=0, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, dead_cycle_time=12 * 40, maze=self.maze)
         self.pacman_sprite = pygame.sprite.GroupSingle(self.pacman)
 
     def create_maze(self, screen):
@@ -42,18 +47,21 @@ class Game:
         self.ghost_sprites.draw(screen)
 
     def update(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.pacman, self.star_sprites, True)
-        for block in blocks_hit_list:
-            self.score += 1
-        self.pacman.update()
-        self.ghost_sprites.update()
-        self.star_sprites.update()
-        self.ghost_sprites.update()
+        if not self.ended:
+            self.responder.check_pacman_collides_star()
+            self.responder.check_pacman_collides_ghost()
+            self.ghost_sprites.update()
+            self.star_sprites.update()
+            self.pacman.update()
+        else:
+            self.pacman.update()
 
     def handle(self, event):
         self.pacman.handle(event)
         for ghost in self.ghosts:
-            ghost.update()
+            ghost.handle(event)
+        for star in self.stars:
+            star.handle(event)
 
     def create_ghosts(self):
         self.ghosts = list()
