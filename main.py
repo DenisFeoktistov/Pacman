@@ -21,7 +21,6 @@ class Game:
 if __name__ == '__main__':
     pygame.init()
     app = QApplication(sys.argv)
-
     game = Game()
     game.show()
 

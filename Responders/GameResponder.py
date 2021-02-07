@@ -29,6 +29,7 @@ class GameResponder:
     def check_pacman_collides_star(self):
         for star in self.game.star_sprites:
             if pygame.sprite.collide_mask(self.game.pacman, star):
+                self.game.points -= 1
                 star.kill()
 
     def check_pacman_collides_ghost(self):
