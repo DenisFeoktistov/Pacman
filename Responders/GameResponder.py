@@ -39,9 +39,13 @@ class GameResponder:
 
     def end_of_the_game(self):
         self.game.pacman.die()
-        self.game.ended = True
+        self.game.lose = True
 
         self.kill_ghosts()
+
+    def win_check(self):
+        if not self.game.star_sprites:
+            self.game.win = True
 
     def kill_ghosts(self):
         self.game.ghost_sprites.empty()

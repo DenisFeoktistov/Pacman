@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+import datetime as dt
 
 from GameFiles.Maze import Maze
 from GameFiles.Pacman import MazePacman
@@ -10,10 +11,11 @@ from Responders.GameResponder import GameResponder
 
 class Game:
     def __init__(self, screen):
-        pygame.font.init()
-        self.ended = False
+        self.start_time = dt.datetime.now()
+
+        self.lose = False
+        self.win = False
         self.score = 0
-        self.set_font()
         self.responder = GameResponder(self)
 
         self.create_maze(screen)
@@ -39,7 +41,7 @@ class Game:
         # We use 12 *, just because it is better for game. If you choose something like 77 or 113, game will be started,
         # but you can find some problems, because of float numbers, that will be in GeneralSprite.
         self.maze = Maze(x=20, y=100, height=8, width=16, cell_width=12 * 5, cell_height=12 * 5, screen=screen,
-                         density=20, game=self)
+                         density=50, game=self)
         self.maze.generate()
 
     def draw(self, screen):
@@ -49,14 +51,19 @@ class Game:
         self.ghost_sprites.draw(screen)
 
     def update(self):
-        if not self.ended:
+        if not self.lose and not self.win:
             self.responder.check_pacman_collides_star()
             self.responder.check_pacman_collides_ghost()
+
+            self.responder.win_check()
+
             self.ghost_sprites.update()
             self.star_sprites.update()
             self.pacman.update()
-        else:
+        elif self.lose:
             self.pacman.update()
+        else:
+            pass
 
     def handle(self, event):
         self.pacman.handle(event)
@@ -64,16 +71,6 @@ class Game:
             ghost.handle(event)
         for star in self.stars:
             star.handle(event)
-
-    def set_up_rest_points(self, screen):
-        self.set_text()
-        screen.blit(self.text, (17, 0))
-
-    def set_text(self):
-        self.text = self.font.render(f'POINTS LEFT: {self.points - self.score}', True, (230, 230, 250))
-
-    def set_font(self):
-        self.font = pygame.font.Font('data/fonts/pixel1.ttf', 50)
 
     def create_ghosts(self):
         self.ghosts = list()
