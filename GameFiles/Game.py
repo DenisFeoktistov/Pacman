@@ -46,6 +46,7 @@ class Game:
 
     def update(self):
         self.responder.check_pacman_collides_star()
+        self.responder.check_pacman_collides_ghost()
         self.pacman.update()
         self.ghost_sprites.update()
         self.star_sprites.update()
