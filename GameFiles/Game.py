@@ -12,6 +12,7 @@ from Responders.GameResponder import GameResponder
 class Game:
     def __init__(self, screen):
         self.start_time = dt.datetime.now()
+        self.end_time = dt.datetime.now()
 
         self.lose = False
         self.win = False

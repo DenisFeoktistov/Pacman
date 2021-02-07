@@ -1,6 +1,7 @@
 import pygame
 
 from random import randint
+import datetime as dt
 
 
 class GameResponder:
@@ -35,17 +36,19 @@ class GameResponder:
     def check_pacman_collides_ghost(self):
         for ghost in self.game.ghost_sprites:
             if pygame.sprite.collide_mask(self.game.pacman, ghost):
-                self.end_of_the_game()
+                self.lose()
 
-    def end_of_the_game(self):
+    def lose(self):
         self.game.pacman.die()
         self.game.lose = True
+        self.game.end_time = dt.datetime.now()
 
         self.kill_ghosts()
 
     def win_check(self):
         if not self.game.star_sprites:
             self.game.win = True
+            self.game.end_time = dt.datetime.now()
 
     def kill_ghosts(self):
         self.game.ghost_sprites.empty()
