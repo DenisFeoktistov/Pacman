@@ -10,6 +10,8 @@ from Responders.GameResponder import GameResponder
 
 class Game:
     def __init__(self, screen):
+        self.ended = False
+
         self.score = 0
         self.responder = GameResponder(self)
 
@@ -28,7 +30,7 @@ class Game:
                 self.stars.append(star)
 
     def create_pacman(self):
-        self.pacman = MazePacman(i=0, j=0, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, maze=self.maze)
+        self.pacman = MazePacman(i=0, j=0, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, dead_cycle_time=12 * 40, maze=self.maze)
         self.pacman_sprite = pygame.sprite.GroupSingle(self.pacman)
 
     def create_maze(self, screen):
@@ -45,12 +47,14 @@ class Game:
         self.ghost_sprites.draw(screen)
 
     def update(self):
-        self.responder.check_pacman_collides_star()
-        self.responder.check_pacman_collides_ghost()
-        self.pacman.update()
-        self.ghost_sprites.update()
-        self.star_sprites.update()
-        self.ghost_sprites.update()
+        if not self.ended:
+            self.responder.check_pacman_collides_star()
+            self.responder.check_pacman_collides_ghost()
+            self.ghost_sprites.update()
+            self.star_sprites.update()
+            self.pacman.update()
+        else:
+            self.pacman.death_update()
 
     def handle(self, event):
         self.pacman.handle(event)

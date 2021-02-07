@@ -34,4 +34,13 @@ class GameResponder:
     def check_pacman_collides_ghost(self):
         for ghost in self.game.ghost_sprites:
             if pygame.sprite.collide_mask(self.game.pacman, ghost):
-                self.game.ghost_sprites.empty()
+                self.end_of_the_game()
+
+    def end_of_the_game(self):
+        self.game.pacman.dead = True
+        self.game.ended = True
+
+        self.kill_ghosts()
+
+    def kill_ghosts(self):
+        self.game.ghost_sprites.empty()
