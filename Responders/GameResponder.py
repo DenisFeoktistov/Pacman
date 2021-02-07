@@ -8,6 +8,8 @@ class GameResponder:
         self.game = game
 
     def generate_ghost_place(self, min_way):
+        # this method generate place for ghost and a way from this place to pacman (0, 0) includes more than min_way
+        # cells.
         i = randint(0, self.game.maze.height - 1)
         j = randint(0, self.game.maze.width - 1)
 
@@ -18,6 +20,8 @@ class GameResponder:
         return i, j
 
     def get_target(self, precision):
+        # this method return cell coordinates like pacman.i += precision, pacman.j += precision
+
         i = max(0, min(self.game.maze.height - 1, self.game.pacman.i + randint(-precision, precision)))
         j = max(0, min(self.game.maze.width - 1, self.game.pacman.j + randint(-precision, precision)))
         return i, j
