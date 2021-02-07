@@ -9,7 +9,7 @@ class Star(pygame.sprite.Sprite):
         self.maze = maze
 
         self.image = pygame.Surface((self.width, self.width))
-        self.image.fill('white')
+        self.image.fill((255, 255, 150))
 
         self.rect = self.image.get_rect()
 
