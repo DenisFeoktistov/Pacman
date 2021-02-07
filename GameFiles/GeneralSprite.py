@@ -15,9 +15,9 @@ class GeneralSprite(pygame.sprite.Sprite):
 
         self.default_frame = default_frame
         if self.default_frame:
-            self.image = pygame.image.load(self.default_frame)
+            self.set_default_frame()
         else:
-            self.image = pygame.image.load(self.frames[0][0])
+            self.set_frame(self.frames[0][0])
 
         self.transform_image()
 
@@ -114,6 +114,7 @@ class GeneralSprite(pygame.sprite.Sprite):
     def set_frame(self, frame):
         self.image = pygame.image.load(frame)
         self.transform_image()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def transform_image(self):
         self.image.set_colorkey(self.image.get_at((0, 0)))

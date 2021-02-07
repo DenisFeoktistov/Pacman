@@ -38,9 +38,9 @@ class Game:
         self.ghost_sprites.draw(screen)
 
     def update(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.pacman, self.star_sprites, True)
-        for block in blocks_hit_list:
-            self.score += 1
+        for star in self.star_sprites:
+            if pygame.sprite.collide_mask(self.pacman, star):
+                star.kill()
         self.pacman.update()
         self.ghost_sprites.update()
         self.star_sprites.update()

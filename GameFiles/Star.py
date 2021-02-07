@@ -11,6 +11,8 @@ class Star(pygame.sprite.Sprite):
         self.image = pygame.Surface((self.width, self.width))
         self.image.fill((255, 255, 150))
 
+        self.mask = pygame.mask.from_surface(self.image)
+
         self.rect = self.image.get_rect()
 
         self.positioning(i, j)
