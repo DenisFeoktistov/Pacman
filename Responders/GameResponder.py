@@ -1,3 +1,5 @@
+import pygame
+
 from random import randint
 
 
@@ -19,3 +21,9 @@ class GameResponder:
         i = max(0, min(self.game.maze.height - 1, self.game.pacman.i + randint(-precision, precision)))
         j = max(0, min(self.game.maze.width - 1, self.game.pacman.j + randint(-precision, precision)))
         return i, j
+
+    def check_pacman_collides_star(self):
+        for star in self.game.star_sprites:
+            if pygame.sprite.collide_mask(self.game.pacman, star):
+                star.kill()
+

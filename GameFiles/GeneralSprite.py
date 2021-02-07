@@ -42,6 +42,11 @@ class GeneralSprite(pygame.sprite.Sprite):
         if self.cycle:
             self.check_cycle()
 
+    def handle(self, event):
+        # yes, it is empty method, but we think, that it is logical better to have method like that, even if it is
+        # doing nothing
+        pass
+
     def start_moving(self, x, y):
         # it is better to do this check, because it can be something really bad without it
         if not self.cycle:

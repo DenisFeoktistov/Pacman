@@ -9,11 +9,6 @@ class Pacman(PacmanSprite):
         self.step_x = step_x
         self.step_y = step_y
 
-    def handle(self, event):
-        # yes, it is empty method, but we think, that it is logical better to have method like that, even if it is
-        # doing nothing
-        pass
-
     def update(self):
         super().update()
         key_state = pygame.key.get_pressed()
@@ -39,11 +34,6 @@ class MazePacman(PacmanSprite):
         super().__init__(x, y, sprite_size_x, sprite_size_y, cycle_time)
         self.step_x = maze.cell_width
         self.step_y = maze.cell_height
-
-    def handle(self, event):
-        # yes, it is empty method, but we think that it is logical better to have method like that, even if it is
-        # doing nothing
-        pass
 
     def update(self):
         super().update()
