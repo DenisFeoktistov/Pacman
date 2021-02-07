@@ -2,7 +2,8 @@ import pygame
 
 
 class GeneralSprite(pygame.sprite.Sprite):
-    def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_iterations, switches_for_cycle, cycle_time, default_frame, frames):
+    def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_iterations, switches_for_cycle, cycle_time,
+                 default_frame, frames):
         super().__init__()
 
         self.sprite_size_x = sprite_size_x
@@ -13,7 +14,10 @@ class GeneralSprite(pygame.sprite.Sprite):
         self.rotation = 0
 
         self.default_frame = default_frame
-        self.image = pygame.image.load(self.default_frame)
+        if self.default_frame:
+            self.image = pygame.image.load(self.default_frame)
+        else:
+            self.image = pygame.image.load(self.frames[0][0])
 
         self.transform_image()
 
@@ -98,7 +102,8 @@ class GeneralSprite(pygame.sprite.Sprite):
         self.rect.y += y
 
     def set_default_frame(self):
-        self.set_frame(self.default_frame)
+        if self.default_frame:
+            self.set_frame(self.default_frame)
 
     def switch_frame(self):
         self.image_counter = (self.image_counter + 1) % len(self.frames[self.rotation])
