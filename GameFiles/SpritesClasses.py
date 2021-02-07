@@ -6,11 +6,11 @@ class PacmanSprite(GeneralSprite):
     CYCLE_ITERATIONS = 12
 
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time):
-        frames = (('data/sprites/pacman/pacman_right1.png', 'data/sprites/pacman/pacman_right2.png'),
-                  ('data/sprites/pacman/pacman_up1.png', 'data/sprites/pacman/pacman_up2.png'),
-                  ('data/sprites/pacman/pacman_left1.png', 'data/sprites/pacman/pacman_left2.png'),
-                  ('data/sprites/pacman/pacman_down1.png', 'data/sprites/pacman/pacman_down2.png'))
-        default_frame = 'data/sprites/pacman/pacman_default.png'
+        frames = (('data/sprites/pacman/move/right/1.png', 'data/sprites/pacman/move/right/2.png'),
+                  ('data/sprites/pacman/move/up/1.png', 'data/sprites/pacman/move/up/2.png'),
+                  ('data/sprites/pacman/move/left/1.png', 'data/sprites/pacman/move/left/2.png'),
+                  ('data/sprites/pacman/move/down/1.png', 'data/sprites/pacman/move/down/2.png'))
+        default_frame = 'data/sprites/pacman/move/default/1.png'
         super().__init__(x, y, sprite_size_x=sprite_size_x, sprite_size_y=sprite_size_y,
                          cycle_iterations=PacmanSprite.CYCLE_ITERATIONS,
                          switches_for_cycle=PacmanSprite.SWITCHES_FOR_CYCLE, cycle_time=cycle_time,
