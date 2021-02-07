@@ -101,12 +101,13 @@ class GeneralSprite(pygame.sprite.Sprite):
         if self.iteration_is_over():
             self.reset_timer()
 
+            self.cycle_counter += 1
+
             if self.cycle_counter % (self.cycle_info.cycle_iterations // self.cycle_info.switches_for_cycle) == 0:
                 self.switch_frame()
 
             self.move(self.cycle_info.cycle_v_x, self.cycle_info.cycle_v_y)
 
-            self.cycle_counter += 1
             if self.cycle_counter == self.cycle_info.cycle_iterations:
                 self.cycle_end()
 

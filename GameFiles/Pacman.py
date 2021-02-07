@@ -48,7 +48,7 @@ class MazePacman(PacmanSprite):
 
     def die(self):
         self.dead = True
-        self.start_cycle(0, 0, MazePacman.DEAD_FRAMES, self.cycle_time * 4, len(MazePacman.DEAD_FRAMES),
+        self.start_cycle(0, 0, MazePacman.DEAD_FRAMES, self.cycle_time * 4, len(MazePacman.DEAD_FRAMES) * 5,
                          len(MazePacman.DEAD_FRAMES))
 
     def update(self):
