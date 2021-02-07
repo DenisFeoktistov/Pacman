@@ -54,7 +54,7 @@ class Game:
             self.star_sprites.update()
             self.pacman.update()
         else:
-            self.pacman.death_update()
+            self.pacman.update()
 
     def handle(self, event):
         self.pacman.handle(event)

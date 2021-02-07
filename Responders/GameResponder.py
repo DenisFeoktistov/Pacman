@@ -37,7 +37,7 @@ class GameResponder:
                 self.end_of_the_game()
 
     def end_of_the_game(self):
-        self.game.pacman.dead = True
+        self.game.pacman.die()
         self.game.ended = True
 
         self.kill_ghosts()

@@ -46,11 +46,14 @@ class MazePacman(PacmanSprite):
         self.step_x = maze.cell_width
         self.step_y = maze.cell_height
 
+    def die(self):
+        self.dead = True
+        self.start_cycle(0, 0, MazePacman.DEAD_FRAMES, self.cycle_time * 2, len(MazePacman.DEAD_FRAMES),
+                         len(MazePacman.DEAD_FRAMES))
+
     def update(self):
-        if self.dead:
-            self.death_update()
-        else:
-            super().update()
+        super().update()
+        if not self.dead:
             key_state = pygame.key.get_pressed()
 
             # second if in every part is checking that pacman can go (there is no wall on his way).
@@ -78,32 +81,3 @@ class MazePacman(PacmanSprite):
                     if not self.in_cycle():
                         self.i += 1
                         self.start_moving(0, self.step_y)
-
-    def switch_death_frame(self):
-        self.set_frame(MazePacman.DEAD_FRAMES[(self.death_counter + 1) % len(MazePacman.DEAD_FRAMES)])
-        self.death_counter += 1
-
-    def start_death_cycle(self):
-        self.cycle = True
-        self.reset_timer()
-
-    def death_update(self):
-        self.check_death_cycle()
-
-    def check_death_cycle(self):
-        self.timer -= self.clock.tick()
-
-        if self.iteration_is_over():
-            self.reset_dead_timer()
-
-            self.switch_death_frame()
-
-            if self.death_counter == len(MazePacman.DEAD_FRAMES):
-                self.death_cycle_end()
-
-    def reset_dead_timer(self):
-        self.timer = self.dead_cycle_time / len(MazePacman.DEAD_FRAMES)
-
-    def death_cycle_end(self):
-        self.cycle = False
-        self.kill()
