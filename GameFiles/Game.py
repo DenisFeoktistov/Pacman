@@ -10,15 +10,12 @@ from Responders.GameResponder import GameResponder
 
 class Game:
     def __init__(self, screen):
-        pygame.font.init()
-        self.set_font()
         self.score = 0
         self.responder = GameResponder(self)
         self.create_maze(screen)
         self.create_pacman()
         self.create_ghosts()
         self.create_stars()
-        self.points = len(self.star_sprites.sprites())
 
     def create_stars(self):
         self.star_sprites = pygame.sprite.Group()
@@ -43,16 +40,6 @@ class Game:
         self.star_sprites.draw(screen)
         self.pacman_sprite.draw(screen)
         self.ghost_sprites.draw(screen)
-
-    def set_up_rest_points(self, screen):
-        self.set_text()
-        screen.blit(self.text, (17, 0))
-
-    def set_text(self):
-        self.text = self.font.render(f'POINTS LEFT: {self.points - self.score}', True, (230, 230, 250))
-
-    def set_font(self):
-        self.font = pygame.font.Font('data/fonts/pixel1.ttf', 50)
 
     def update(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.pacman, self.star_sprites, True)

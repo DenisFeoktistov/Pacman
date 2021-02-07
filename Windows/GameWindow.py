@@ -18,6 +18,8 @@ class GameWindow:
         screen = pygame.display.set_mode(GameWindow.SIZE)
         game = Game(screen)
 
+        self.set_up_screen(screen)
+
         self.start_main_cycle(screen, game)
 
     def start_main_cycle(self, screen, game):
@@ -27,16 +29,16 @@ class GameWindow:
             time.tick(self.FPS)
             for event in pygame.event.get():
                 game.handle(event)
+
                 if event.type == pygame.QUIT:
                     running = False
-            self.set_up_screen(screen, game)
+            screen.fill((0, 0, 0))
             game.update()
             game.draw(screen)
             pygame.display.flip()
 
-    def set_up_screen(self, screen, game):
+    def set_up_screen(self, screen):
         screen.fill((0, 0, 0))
-        game.set_up_rest_points(screen)
 
     def close(self):
         pygame.display.quit()
