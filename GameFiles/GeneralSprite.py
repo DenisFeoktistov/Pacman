@@ -78,7 +78,7 @@ class GeneralSprite(pygame.sprite.Sprite):
         self.cycle_info = cycle_info(x, y, frames, cycle_time, cycle_iterations, switches_for_cycle)
 
         self.cycle = True
-        self.reset_timer()
+        self.timer = 0
 
     def rotation(self, x, y):
         if x > 0:
