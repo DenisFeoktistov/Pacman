@@ -1,5 +1,6 @@
 import pygame
 
+import SubsidiaryFiles.Sounds as Sounds
 from random import randint
 
 
@@ -27,9 +28,11 @@ class GameResponder:
         return i, j
 
     def check_pacman_collides_star(self):
+        pygame.mixer.init()
         for star in self.game.star_sprites:
             if pygame.sprite.collide_mask(self.game.pacman, star):
                 star.kill()
+                Sounds.chomp_sound.play()
 
     def check_pacman_collides_ghost(self):
         for ghost in self.game.ghost_sprites:
