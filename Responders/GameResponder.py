@@ -7,6 +7,7 @@ from random import randint
 class GameResponder:
     def __init__(self, game):
         self.game = game
+        pygame.mixer.init()
 
     def generate_ghost_place(self, min_way):
         # this method generate place for ghost and a way from this place to pacman (0, 0) includes more than min_way
@@ -28,7 +29,6 @@ class GameResponder:
         return i, j
 
     def check_pacman_collides_star(self):
-        pygame.mixer.init()
         for star in self.game.star_sprites:
             if pygame.sprite.collide_mask(self.game.pacman, star):
                 star.kill()
