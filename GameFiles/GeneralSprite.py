@@ -1,28 +1,53 @@
 import pygame
 
 
-class cycle_info:
+class CycleInfo:
+    # Just a subsidiary class for cycle info.
     def __init__(self, x, y, frames, cycle_time, cycle_iterations, switches_for_cycle):
         self.x = x
         self.y = y
         self.frames = frames
         self.cycle_time = cycle_time
-        self.cycle_iterations = cycle_iterations
+        self.iterations_for_cycle = cycle_iterations
         self.switches_for_cycle = switches_for_cycle
 
-        self.frames_counter = -1
+        self.timer = 0
+
+        self.frames_counter = 0
         self.cycle_counter = 0
 
-        self.cycle_v_x = self.x / self.cycle_iterations
-        self.cycle_v_y = self.y / self.cycle_iterations
+        self.cycle_v_x = self.x / self.iterations_for_cycle
+        self.cycle_v_y = self.y / self.iterations_for_cycle
+
+    def need_to_switch_frame(self):
+        return self.cycle_counter % (self.iterations_for_cycle // self.switches_for_cycle) == 0
+
+    def update_frame_counter(self):
+        self.frames_counter = (self.frames_counter + 1) % len(self.frames)
+
+    def get_frame(self):
+        return self.frames[self.frames_counter]
+
+    def reset_timer(self):
+        self.timer = self.cycle_time / self.iterations_for_cycle
+
+    def iteration_is_over(self):
+        return self.timer <= 0
+
+    def update_timer(self, time):
+        self.timer -= time
+
+    def cycle_is_ended(self):
+        return self.cycle_counter >= self.iterations_for_cycle
+
+    def update_cycle_counter(self):
+        self.cycle_counter += 1
 
 
 class GeneralSprite(pygame.sprite.Sprite):
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_iterations, switches_for_cycle, cycle_time,
                  default_frame, frames):
         super().__init__()
-
-        self.cycle_info = cycle_info(0, 0, frames, cycle_time, cycle_iterations, switches_for_cycle)
 
         self.sprite_size_x = sprite_size_x
         self.sprite_size_y = sprite_size_y
@@ -49,8 +74,6 @@ class GeneralSprite(pygame.sprite.Sprite):
         self.cycle = False
 
         self.clock = pygame.time.Clock()
-        self.timer = 0
-        self.reset_timer()
 
     def update(self):
         if self.cycle:
@@ -75,10 +98,9 @@ class GeneralSprite(pygame.sprite.Sprite):
         return self.cycle
 
     def start_cycle(self, x, y, frames, cycle_time, cycle_iterations, switches_for_cycle):
-        self.cycle_info = cycle_info(x, y, frames, cycle_time, cycle_iterations, switches_for_cycle)
+        self.cycle_info = CycleInfo(x, y, frames, cycle_time, cycle_iterations, switches_for_cycle)
 
         self.cycle = True
-        self.timer = 0
 
     def rotation(self, x, y):
         if x > 0:
@@ -90,26 +112,20 @@ class GeneralSprite(pygame.sprite.Sprite):
         elif y < 0:
             return 1
 
-    def reset_timer(self):
-        self.timer = self.cycle_info.cycle_time / self.cycle_info.cycle_iterations
-
-    def iteration_is_over(self):
-        return self.timer <= 0
-
     def check_cycle(self):
-        self.timer -= self.clock.tick()
+        self.cycle_info.update_timer(self.clock.tick())
 
-        if self.iteration_is_over():
-            self.reset_timer()
-
-            if self.cycle_info.cycle_counter % (
-                    self.cycle_info.cycle_iterations // self.cycle_info.switches_for_cycle) == 0:
-                self.switch_frame()
+        if self.cycle_info.iteration_is_over():
+            if self.cycle_info.need_to_switch_frame():
+                self.set_frame(self.cycle_info.get_frame())
+                self.cycle_info.update_frame_counter()
 
             self.move(self.cycle_info.cycle_v_x, self.cycle_info.cycle_v_y)
 
-            self.cycle_info.cycle_counter += 1
-            if self.cycle_info.cycle_counter == self.cycle_info.cycle_iterations:
+            self.cycle_info.reset_timer()
+            self.cycle_info.update_cycle_counter()
+
+            if self.cycle_info.cycle_is_ended():
                 self.cycle_end()
 
     def cycle_end(self):
@@ -122,12 +138,6 @@ class GeneralSprite(pygame.sprite.Sprite):
     def set_default_frame(self):
         if self.default_frame:
             self.set_frame(self.default_frame)
-
-    def switch_frame(self):
-        self.cycle_info.frames_counter = (self.cycle_info.frames_counter + 1) % len(self.cycle_info.frames)
-        frame = self.cycle_info.frames[self.cycle_info.frames_counter]
-
-        self.set_frame(frame)
 
     def set_frame(self, frame):
         self.image = pygame.image.load(frame)
