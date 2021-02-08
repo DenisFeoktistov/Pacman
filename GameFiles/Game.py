@@ -56,6 +56,7 @@ class Game:
             self.responder.check_pacman_collides_star()
             self.responder.check_pacman_collides_ghost()
 
+            self.responder.lose_check()
             self.responder.win_check()
 
             self.ghost_sprites.update()

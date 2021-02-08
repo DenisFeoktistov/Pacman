@@ -34,9 +34,8 @@ class GameResponder:
                 star.kill()
 
     def check_pacman_collides_ghost(self):
-        for ghost in self.game.ghost_sprites:
-            if pygame.sprite.collide_mask(self.game.pacman, ghost):
-                self.lose()
+        # actually, this method realized in self.lose_check()
+        pass
 
     def lose(self):
         self.game.pacman.die()
@@ -50,5 +49,20 @@ class GameResponder:
             self.game.win = True
             self.game.end_time = dt.datetime.now()
 
+    def lose_check(self):
+        for ghost in self.game.ghost_sprites:
+            if pygame.sprite.collide_mask(self.game.pacman, ghost):
+                self.lose()
+
     def kill_ghosts(self):
         self.game.ghost_sprites.empty()
+
+    def get_minutes(self):
+        if not self.game.lose:
+            return ((dt.datetime.now() - self.game.start_time).seconds // 60) % 60
+        return ((self.game.end_time - self.game.start_time).seconds // 60) % 60
+
+    def get_seconds(self):
+        if not self.game.lose:
+            return (dt.datetime.now() - self.game.start_time).seconds % 60
+        return (self.game.end_time - self.game.start_time).seconds % 60
