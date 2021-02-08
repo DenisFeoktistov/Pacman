@@ -10,7 +10,8 @@ class cycle_info:
         self.cycle_iterations = cycle_iterations
         self.switches_for_cycle = switches_for_cycle
 
-        self.frames_counter = 0
+        self.frames_counter = -1
+        self.cycle_counter = 0
 
         self.cycle_v_x = self.x / self.cycle_iterations
         self.cycle_v_y = self.y / self.cycle_iterations
@@ -101,18 +102,17 @@ class GeneralSprite(pygame.sprite.Sprite):
         if self.iteration_is_over():
             self.reset_timer()
 
-            self.cycle_counter += 1
-
-            if self.cycle_counter % (self.cycle_info.cycle_iterations // self.cycle_info.switches_for_cycle) == 0:
+            if self.cycle_info.cycle_counter % (
+                    self.cycle_info.cycle_iterations // self.cycle_info.switches_for_cycle) == 0:
                 self.switch_frame()
 
             self.move(self.cycle_info.cycle_v_x, self.cycle_info.cycle_v_y)
 
-            if self.cycle_counter == self.cycle_info.cycle_iterations:
+            self.cycle_info.cycle_counter += 1
+            if self.cycle_info.cycle_counter == self.cycle_info.cycle_iterations:
                 self.cycle_end()
 
     def cycle_end(self):
-        self.cycle_counter = 0
         self.cycle = False
 
     def move(self, x, y):
