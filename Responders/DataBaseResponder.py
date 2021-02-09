@@ -14,7 +14,8 @@ class DataBaseResponder:
 
         return sorted(list(map(lambda x: dt.time(minute=(x[0] // 60) % 60, second=x[0] % 60), result)))
 
-    def add_time_to_table(self, time):
+    def add_time_to_table(self, time1):
         cur = self.con.cursor()
+        cur.execute("""INSERT into records(time) VALUES(?)""", (int(time1.second),))
 
-        cur.execute("""INSERT into records VALUES(?)""", (time.seconds))
+        self.con.commit()
