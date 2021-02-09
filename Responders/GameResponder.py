@@ -1,5 +1,6 @@
 import pygame
 
+import SubsidiaryFiles.Sounds as Sounds
 from random import randint
 import datetime as dt
 
@@ -7,6 +8,7 @@ import datetime as dt
 class GameResponder:
     def __init__(self, game):
         self.game = game
+        pygame.mixer.init()
 
     def generate_ghost_place(self, min_way):
         # this method generate place for ghost and a way from this place to pacman (0, 0) includes more than min_way
@@ -32,6 +34,7 @@ class GameResponder:
             if pygame.sprite.collide_mask(self.game.pacman, star):
                 self.game.points -= 1
                 star.kill()
+                Sounds.chomp_sound.play()
 
     def check_pacman_collides_ghost(self):
         # actually, this method realized in self.lose_check()

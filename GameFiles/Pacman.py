@@ -1,5 +1,6 @@
 import pygame
 from GameFiles.SpritesClasses import PacmanSprite
+import SubsidiaryFiles.Sounds as Sounds
 
 
 class Pacman(PacmanSprite):
@@ -50,6 +51,7 @@ class MazePacman(PacmanSprite):
         self.dead = True
         self.start_cycle(0, 0, MazePacman.DEAD_FRAMES, self.cycle_time * 4, len(MazePacman.DEAD_FRAMES) * 5,
                          len(MazePacman.DEAD_FRAMES))
+        Sounds.death_sound.play()
 
     def update(self):
         if self.dead:
