@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+import datetime as dt
 
 from GameFiles.Maze import Maze
 from GameFiles.Pacman import MazePacman
@@ -10,8 +11,11 @@ from Responders.GameResponder import GameResponder
 
 class Game:
     def __init__(self, screen):
-        self.ended = False
+        self.start_time = dt.datetime.now()
+        self.end_time = dt.datetime.now()
 
+        self.lose = False
+        self.win = False
         self.score = 0
         self.responder = GameResponder(self)
 
@@ -19,6 +23,7 @@ class Game:
         self.create_pacman()
         self.create_ghosts()
         self.create_stars()
+        self.points = len(self.star_sprites.sprites())
 
     def create_stars(self):
         self.stars = list()
@@ -37,7 +42,7 @@ class Game:
         # We use 12 *, just because it is better for game. If you choose something like 77 or 113, game will be started,
         # but you can find some problems, because of float numbers, that will be in GeneralSprite.
         self.maze = Maze(x=20, y=100, height=8, width=16, cell_width=12 * 5, cell_height=12 * 5, screen=screen,
-                         density=20, game=self)
+                         density=50, game=self)
         self.maze.generate()
 
     def draw(self, screen):
@@ -47,14 +52,20 @@ class Game:
         self.ghost_sprites.draw(screen)
 
     def update(self):
-        if not self.ended:
+        if not self.lose and not self.win:
             self.responder.check_pacman_collides_star()
             self.responder.check_pacman_collides_ghost()
+
+            self.responder.lose_check()
+            self.responder.win_check()
+
             self.ghost_sprites.update()
             self.star_sprites.update()
             self.pacman.update()
-        else:
+        elif self.lose:
             self.pacman.update()
+        else:
+            pass
 
     def handle(self, event):
         self.pacman.handle(event)

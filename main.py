@@ -22,7 +22,6 @@ if __name__ == '__main__':
     pygame.init()
     pygame.font.init()
     app = QApplication(sys.argv)
-
     game = Game()
     game.show()
 
