@@ -31,21 +31,52 @@ class GameWindow:
 
                 if event.type == pygame.QUIT:
                     running = False
+                if self.restart_button_clicked(event):
+                    self.restart()
+                if self.game.win:
+                    self.responder.game_ended()
 
             self.set_up_screen()
 
+            self.draw_buttons()
             self.game.update()
             self.game.draw(self.screen)
 
             pygame.display.flip()
 
+    def draw_buttons(self):
+        self.restart_button_group.draw(self.screen)
+
+    def restart(self):
+        self.game.restart()
+
+    def restart_button_clicked(self, event):
+        return event.type == pygame.MOUSEBUTTONDOWN and self.restart_button.rect.collidepoint(event.pos)
+
     def set_up_screen(self):
         self.screen.fill((0, 0, 0))
 
         self.set_up_texts()
+        self.set_up_buttons()
 
     def close(self):
         pygame.display.quit()
+
+    def set_up_buttons(self):
+        self.set_up_restart_button()
+
+    def set_up_restart_button(self):
+        self.restart_button = pygame.sprite.Sprite()
+        self.restart_button.image = pygame.image.load("data/sprites/restart_button/restart1.png")
+        self.restart_button.rect = self.restart_button.image.get_rect()
+
+        self.restart_button.image.set_colorkey(self.restart_button.image.get_at((0, 0)))
+        self.restart_button.image = pygame.transform.scale(self.restart_button.image, (70, 70))
+
+        self.restart_button.rect.x = 630
+        self.restart_button.rect.y = 10
+
+        self.restart_button_group = pygame.sprite.GroupSingle(self.restart_button)
 
     def set_up_texts(self):
         self.set_score_text()

@@ -14,15 +14,32 @@ class Game:
         self.start_time = dt.datetime.now()
         self.end_time = dt.datetime.now()
 
+        self.screen = screen
+
+        self.responder = GameResponder(self)
+
+        self.create_components()
+
         self.lose = False
         self.win = False
         self.score = 0
-        self.responder = GameResponder(self)
+        self.points = len(self.star_sprites.sprites())
 
-        self.create_maze(screen)
+    def create_components(self):
+        self.create_maze(self.screen)
         self.create_pacman()
         self.create_ghosts()
         self.create_stars()
+
+    def restart(self):
+        self.start_time = dt.datetime.now()
+        self.end_time = dt.datetime.now()
+
+        self.create_components()
+
+        self.lose = False
+        self.win = False
+        self.score = 0
         self.points = len(self.star_sprites.sprites())
 
     def create_stars(self):

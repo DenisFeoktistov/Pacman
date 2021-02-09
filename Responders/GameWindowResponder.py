@@ -1,4 +1,5 @@
 from Responders.DataBaseResponder import DataBaseResponder
+import datetime as dt
 
 
 class GameWindowResponder:
@@ -20,3 +21,10 @@ class GameWindowResponder:
 
     def get_record_seconds(self):
         return self.data_base_responder.get_time_list()[0].second % 60
+
+    def game_ended(self):
+        minutes = self.get_minutes()
+        seconds = self.get_seconds()
+        time = dt.time(minute=minutes, second=seconds)
+        if time not in self.data_base_responder.get_time_list():
+            self.data_base_responder.add_time_to_table(dt.time(minute=minutes, second=seconds))

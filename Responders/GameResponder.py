@@ -48,8 +48,11 @@ class GameResponder:
 
     def win_check(self):
         if not self.game.star_sprites:
-            self.game.win = True
-            self.game.end_time = dt.datetime.now()
+            self.win()
+
+    def win(self):
+        self.game.win = True
+        self.game.end_time = dt.datetime.now()
 
     def lose_check(self):
         for ghost in self.game.ghost_sprites:
