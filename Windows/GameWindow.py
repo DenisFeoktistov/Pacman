@@ -1,26 +1,22 @@
 import pygame
-import datetime as dt
 
 
 from GameFiles.Game import Game
+from Responders.GameWindowResponder import GameWindowResponder
 
 
 class GameWindow:
     SIZE = WIDTH, HEIGHT = 1000, 600
     FPS = 120
 
-    def __init__(self, main_interface):
-        self.main_interface = main_interface
-
-    def set_responder(self, responder):
-        self.responder = responder
-
-    def show(self):
-        pygame.init()
-        self.set_font()
-
+    def __init__(self):
+        self.responder = GameWindowResponder(self)
         self.screen = pygame.display.set_mode(GameWindow.SIZE)
         self.game = Game(self.screen)
+
+        self.set_font()
+
+    def show(self):
         self.start_main_cycle()
 
     def start_main_cycle(self):
@@ -66,5 +62,4 @@ class GameWindow:
         self.time_text = self.font.render(f'TIME: {str(minutes).rjust(2, "0")}:{str(seconds).rjust(2, "0")}', True, (230, 230, 250))
 
     def set_font(self):
-        pygame.font.init()
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 50)

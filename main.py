@@ -2,28 +2,23 @@ from PyQt5.QtWidgets import QApplication
 import pygame
 import sys
 
-from MainClasses.Responder import MainResponder
-from MainClasses.Interface import MainInterface
+
+from Windows.GameWindow import GameWindow
 
 
-class Game:
+class App:
     def __init__(self):
-        self.responder = MainResponder()
-        self.interface = MainInterface()
-
-        self.interface.set_responder(self.responder)
-        self.responder.set_interface(self.interface)
-
-    def show(self):
-        self.interface.show()
+        self.game = GameWindow()
+        self.game.show()
 
 
 if __name__ == '__main__':
     pygame.init()
     pygame.font.init()
+    pygame.mixer.init()
+
     app = QApplication(sys.argv)
-    game = Game()
-    game.show()
+    game = App()
 
     pygame.quit()
     sys.exit(app.exec())

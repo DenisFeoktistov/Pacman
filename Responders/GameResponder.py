@@ -8,7 +8,6 @@ import datetime as dt
 class GameResponder:
     def __init__(self, game):
         self.game = game
-        pygame.mixer.init()
 
     def generate_ghost_place(self, min_way):
         # this method generate place for ghost and a way from this place to pacman (0, 0) includes more than min_way
