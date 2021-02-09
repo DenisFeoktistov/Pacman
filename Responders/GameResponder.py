@@ -21,11 +21,15 @@ class GameResponder:
 
         return i, j
 
-    def get_target(self, precision):
+    def get_target(self, precision, follow_pacman):
         # this method return cell coordinates like pacman.i += precision, pacman.j += precision
 
-        i = max(0, min(self.game.maze.height - 1, self.game.pacman.i + randint(-precision, precision)))
-        j = max(0, min(self.game.maze.width - 1, self.game.pacman.j + randint(-precision, precision)))
+        if follow_pacman:
+            i = max(0, min(self.game.maze.height - 1, self.game.pacman.i + randint(-precision, precision)))
+            j = max(0, min(self.game.maze.width - 1, self.game.pacman.j + randint(-precision, precision)))
+        else:
+            i = randint(0, self.game.maze.height - 1)
+            j = randint(0, self.game.maze.width - 1)
         return i, j
 
     def check_pacman_collides_star(self):
@@ -63,11 +67,11 @@ class GameResponder:
         self.game.ghost_sprites.empty()
 
     def get_minutes(self):
-        if not self.game.lose:
+        if not (self.game.lose or self.game.win):
             return ((dt.datetime.now() - self.game.start_time).seconds // 60) % 60
         return ((self.game.end_time - self.game.start_time).seconds // 60) % 60
 
     def get_seconds(self):
-        if not self.game.lose:
+        if not (self.game.lose or self.game.win):
             return (dt.datetime.now() - self.game.start_time).seconds % 60
         return (self.game.end_time - self.game.start_time).seconds % 60

@@ -16,6 +16,6 @@ class DataBaseResponder:
 
     def add_time_to_table(self, time1):
         cur = self.con.cursor()
-        cur.execute("""INSERT into records(time) VALUES(?)""", (int(time1.second),))
+        cur.execute("""INSERT into records(time) VALUES(?)""", (time1.second + time1.minute * 60,))
 
         self.con.commit()
