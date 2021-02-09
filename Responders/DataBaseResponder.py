@@ -4,7 +4,7 @@ import datetime as dt
 
 class DataBaseResponder:
     def __init__(self):
-        self.db_name = "casino_db.db"
+        self.db_name = "records.db"
         self.con = sqlite3.connect(self.db_name)
 
     def get_time_list(self):
@@ -12,7 +12,7 @@ class DataBaseResponder:
 
         result = cur.execute("""SELECT * FROM records""").fetchall()
 
-        return sorted(list(map(lambda x: dt.time(second=x), result)))
+        return sorted(list(map(lambda x: dt.time(minute=(x[0] // 60) % 60, second=x[0] % 60), result)))
 
     def add_time_to_table(self, time):
         cur = self.con.cursor()

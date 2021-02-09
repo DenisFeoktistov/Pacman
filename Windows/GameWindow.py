@@ -1,6 +1,5 @@
 import pygame
 
-
 from GameFiles.Game import Game
 from Responders.GameWindowResponder import GameWindowResponder
 
@@ -11,6 +10,7 @@ class GameWindow:
 
     def __init__(self):
         self.responder = GameWindowResponder(self)
+
         self.screen = pygame.display.set_mode(GameWindow.SIZE)
         self.game = Game(self.screen)
 
@@ -33,8 +33,10 @@ class GameWindow:
                     running = False
 
             self.set_up_screen()
+
             self.game.update()
             self.game.draw(self.screen)
+
             pygame.display.flip()
 
     def set_up_screen(self):
@@ -48,9 +50,11 @@ class GameWindow:
     def set_up_texts(self):
         self.set_score_text()
         self.set_time_text()
+        self.set_record_text()
 
         self.screen.blit(self.score_text, (17, 0))
         self.screen.blit(self.time_text, (737, 0))
+        self.screen.blit(self.record_time_text, (807, 60))
 
     def set_score_text(self):
         score = self.responder.get_score()
@@ -59,7 +63,18 @@ class GameWindow:
     def set_time_text(self):
         minutes = self.responder.get_minutes()
         seconds = self.responder.get_seconds()
-        self.time_text = self.font.render(f'TIME: {str(minutes).rjust(2, "0")}:{str(seconds).rjust(2, "0")}', True, (230, 230, 250))
+        self.time_text = self.font.render(f'TIME: {str(minutes).rjust(2, "0")}:{str(seconds).rjust(2, "0")}', True,
+                                          (230, 230, 250))
+
+    def set_record_text(self):
+        minutes = self.responder.get_record_minutes()
+        seconds = self.responder.get_record_seconds()
+
+        font = pygame.font.Font('data/fonts/pixel1.ttf', 20)
+
+        self.record_time_text = font.render(
+            f'RECORD TIME: {str(minutes).rjust(2, "0")}:{str(seconds).rjust(2, "0")}', True,
+            (230, 230, 250))
 
     def set_font(self):
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 50)
