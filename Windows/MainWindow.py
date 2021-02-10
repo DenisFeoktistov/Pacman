@@ -16,18 +16,18 @@ class MainWindow:
         self.time = pygame.time.Clock()
 
         self.game_window = GameWindow(self)
-        self.main_window = MenuWindow(self)
+        self.main_menu_window = MenuWindow(self)
         self.score_window = ScoreTableWindow(self)
         self.rules_window = RulesWindow(self)
 
     def show(self):
-        self.game_window.show()
+        self.main_menu_window.show()
 
     def switch_to_game(self):
         self.game_window.show()
 
     def switch_to_menu(self):
-        self.main_window.show()
+        self.main_menu_window.show()
 
     def switch_to_score(self):
         self.score_window.show()
