@@ -18,6 +18,7 @@ class GameWindow:
         self.set_font()
 
     def show(self):
+        self.restart()
         self.start_cycle()
 
     def start_cycle(self):
