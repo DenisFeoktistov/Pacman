@@ -30,7 +30,6 @@ class GameWindow:
                 self.game.handle(event)
 
                 if event.type == pygame.QUIT:
-                    running = False
                     self.main_window.switch_to_menu()
                     return 0
                 if self.restart_button_clicked(event):
@@ -68,12 +67,12 @@ class GameWindow:
         self.set_up_restart_button()
 
     def set_up_restart_button(self):
-        self.restart_button_pic = pygame.image.load("data/pictures/buttons/restart2.png")
-        self.restart_button_pic = pygame.transform.scale(self.restart_button_pic, (50, 50))
+        self.restart_button_pic = pygame.image.load("data/pictures/buttons/restart_3.png")
+        self.restart_button_pic = pygame.transform.scale(self.restart_button_pic, (50, 46))
         self.restart_button_rect = self.restart_button_pic.get_rect()
 
-        self.restart_button_rect.x = 630
-        self.restart_button_rect.y = 10
+        self.restart_button_rect.x = 10
+        self.restart_button_rect.y = 50
 
     def set_up_texts(self):
         self.set_score_text()
