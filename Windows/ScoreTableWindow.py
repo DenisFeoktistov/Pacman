@@ -10,7 +10,7 @@ class ScoreTableWindow:
 
         self.set_background()
         self.set_font()
-        # self.set_play_button()
+        self.set_back_button()
 
         self.running = False
 
@@ -33,10 +33,9 @@ class ScoreTableWindow:
                     self.buttons_click_check(event.pos)
 
     def buttons_click_check(self, mouse_pos):
-        #
-        if self.play_button.collidepoint(mouse_pos):
+        if self.back_button.collidepoint(mouse_pos):
             self.running = False
-            self.main_window.switch_to_game()
+            self.main_window.switch_to_menu()
 
     def set_up_screen(self):
         self.screen.fill((0, 0, 0))
@@ -54,18 +53,15 @@ class ScoreTableWindow:
         self.background_rect = self.background_photo.get_rect()
 
     def draw_buttons(self):
-        #
-        self.draw_play_button()
+        self.draw_back_button()
 
-    def draw_play_button(self):
-        #
-        self.screen.blit(self.text_play, self.play_button)
+    def draw_back_button(self):
+        self.screen.blit(self.text_back, self.back_button)
 
     def set_font(self):
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 30)
 
-    def set_play_button(self):
-        #
-        self.text_play = self.font.render('Играть', False, (255, 255, 255))
-        self.play_button = self.text_play.get_rect()
-        self.play_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 2)
+    def set_back_button(self):
+        self.text_back = self.font.render('Вернуться', False, (255, 255, 255))
+        self.back_button = self.text_back.get_rect()
+        self.back_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 2)
