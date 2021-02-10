@@ -1,9 +1,14 @@
 import pygame
 
 
+from Responders.DataBaseResponder import DataBaseResponder
+
+
 class ScoreTableWindow:
     def __init__(self, main_window):
         self.main_window = main_window
+        self.responder = DataBaseResponder()
+
         self.screen = self.main_window.screen
         self.time = self.main_window.time
         self.FPS = self.main_window.FPS
@@ -11,6 +16,7 @@ class ScoreTableWindow:
         self.set_background()
         self.set_font()
         self.set_back_button()
+        self.set_table()
 
         self.running = False
 
@@ -42,6 +48,7 @@ class ScoreTableWindow:
 
         self.draw_background()
         self.draw_buttons()
+        self.draw_table()
 
     def draw_background(self):
         self.screen.blit(self.background_photo, self.background_rect)
@@ -51,6 +58,19 @@ class ScoreTableWindow:
         self.background_photo = pygame.transform.scale(
             self.background_photo, (self.main_window.WIDTH, self.main_window.HEIGHT))
         self.background_rect = self.background_photo.get_rect()
+
+    def set_table(self):
+        self.strings = list()
+        results = self.responder.get_time_list()[:5]
+        for i in range(5):
+            string_text = self.font.render(f'TOP #{i + 1}: {results[i].strftime("%M:%S")}', False, (255, 255, 255))
+            string_rect = string_text.get_rect()
+            string_rect.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 200 - 50 * (5 - i))
+            self.strings.append((string_text, string_rect))
+
+    def draw_table(self):
+        for string in self.strings:
+            self.screen.blit(string[0], string[1])
 
     def draw_buttons(self):
         self.draw_back_button()
