@@ -64,4 +64,4 @@ class ScoreTableWindow:
     def set_back_button(self):
         self.text_back = self.font.render('Вернуться', False, (255, 255, 255))
         self.back_button = self.text_back.get_rect()
-        self.back_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 2)
+        self.back_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 50)
