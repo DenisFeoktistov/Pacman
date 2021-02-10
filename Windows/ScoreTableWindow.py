@@ -39,7 +39,7 @@ class ScoreTableWindow:
                     self.buttons_click_check(event.pos)
 
     def buttons_click_check(self, mouse_pos):
-        if self.back_button.collidepoint(mouse_pos):
+        if self.back_rect.collidepoint(mouse_pos):
             self.running = False
             self.main_window.switch_to_menu()
 
@@ -76,7 +76,7 @@ class ScoreTableWindow:
         self.draw_back_button()
 
     def draw_back_button(self):
-        self.screen.blit(self.text_back, self.back_button)
+        self.screen.blit(self.text_back, self.back_rect)
 
     def set_font(self):
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 50)
@@ -84,5 +84,5 @@ class ScoreTableWindow:
     def set_back_button(self):
         font = pygame.font.Font('data/fonts/pixel1.ttf', 40)
         self.text_back = font.render('Вернуться', False, (255, 255, 255))
-        self.back_button = self.text_back.get_rect()
-        self.back_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 50)
+        self.back_rect = self.text_back.get_rect()
+        self.back_rect.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 50)

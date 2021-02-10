@@ -58,7 +58,7 @@ class Game:
     def create_maze(self, screen):
         # We use 12 *, just because it is better for game. If you choose something like 77 or 113, game will be started,
         # but you can find some problems, because of float numbers, that will be in GeneralSprite.
-        self.maze = Maze(x=10, y=100, height=8, width=16, cell_width=12 * 5, cell_height=12 * 5, screen=screen,
+        self.maze = Maze(x=20, y=100, height=8, width=16, cell_width=12 * 5, cell_height=12 * 5, screen=screen,
                          density=20, game=self)
         self.maze.generate()
 
