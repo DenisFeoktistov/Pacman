@@ -11,8 +11,26 @@ class RulesWindow:
         self.set_background()
         self.set_font()
         self.set_back_button()
+        self.set_text()
 
         self.running = False
+
+    def set_text(self):
+        self.strings = list()
+        text = "Приветсвуем Вас в игре 'Pacman'! Вы играете за\n " \
+               "пакмена, Ваша цель - собрать все звезды за наименьшее\n" \
+               " количество времени. Но попасть в таблицу лидеров Вам\n" \
+               "будут мешать приведения, которых мы старательно \n" \
+               "настраивали :) Как видите, все достаточно просто.\n Удачи!"
+        for i, string in enumerate(text.split("\n")):
+            string_text = self.font.render(string, False, (255, 255, 255))
+            string_rect = string_text.get_rect()
+            string_rect.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 200 - 50 * (5 - i))
+            self.strings.append((string_text, string_rect))
+
+    def draw_text(self):
+        for string in self.strings:
+            self.screen.blit(string[0], string[1])
 
     def show(self):
         self.start_cycle()
@@ -42,6 +60,7 @@ class RulesWindow:
 
         self.draw_background()
         self.draw_back_button()
+        self.draw_text()
 
     def draw_background(self):
         self.screen.blit(self.background_photo, self.background_rect)
@@ -59,6 +78,7 @@ class RulesWindow:
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 30)
 
     def set_back_button(self):
-        self.text_back = self.font.render('Вернуться', False, (255, 255, 255))
+        font = pygame.font.Font('data/fonts/pixel1.ttf', 40)
+        self.text_back = font.render('Вернуться', False, (255, 255, 255))
         self.back_button = self.text_back.get_rect()
         self.back_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 50)

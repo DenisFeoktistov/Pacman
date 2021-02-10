@@ -62,10 +62,10 @@ class ScoreTableWindow:
     def set_table(self):
         self.strings = list()
         results = self.responder.get_time_list()[:5]
-        for i in range(5):
+        for i in range(len(results)):
             string_text = self.font.render(f'TOP #{i + 1}: {results[i].strftime("%M:%S")}', False, (255, 255, 255))
             string_rect = string_text.get_rect()
-            string_rect.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 200 - 50 * (5 - i))
+            string_rect.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 100 - 80 * (5 - i))
             self.strings.append((string_text, string_rect))
 
     def draw_table(self):
@@ -79,9 +79,10 @@ class ScoreTableWindow:
         self.screen.blit(self.text_back, self.back_button)
 
     def set_font(self):
-        self.font = pygame.font.Font('data/fonts/pixel1.ttf', 30)
+        self.font = pygame.font.Font('data/fonts/pixel1.ttf', 50)
 
     def set_back_button(self):
-        self.text_back = self.font.render('Вернуться', False, (255, 255, 255))
+        font = pygame.font.Font('data/fonts/pixel1.ttf', 40)
+        self.text_back = font.render('Вернуться', False, (255, 255, 255))
         self.back_button = self.text_back.get_rect()
         self.back_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT - 50)
