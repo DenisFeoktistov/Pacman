@@ -32,8 +32,8 @@ class GameWindow:
                 if event.type == pygame.QUIT:
                     self.main_window.switch_to_menu()
                     return 0
-                if self.restart_button_clicked(event):
-                    self.restart()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.click_coords_check(event.pos)
                 if self.game.win:
                     self.responder.game_ended()
 
@@ -47,12 +47,16 @@ class GameWindow:
 
     def draw_buttons(self):
         self.screen.blit(self.restart_button_pic, self.restart_button_rect)
+        self.screen.blit(self.home_button_pic, self.home_button_rect)
 
     def restart(self):
         self.game.restart()
 
-    def restart_button_clicked(self, event):
-        return event.type == pygame.MOUSEBUTTONDOWN and self.restart_button_rect.collidepoint(event.pos)
+    def click_coords_check(self, mouse_pos):
+        if self.restart_button_rect.collidepoint(mouse_pos):
+            self.restart()
+        if self.home_button_rect.collidepoint(mouse_pos):
+            self.main_window.switch_to_menu()
 
     def set_up_screen(self):
         self.screen.fill((0, 0, 0))
@@ -65,14 +69,23 @@ class GameWindow:
 
     def set_up_buttons(self):
         self.set_up_restart_button()
+        self.set_up_home_button()
+
+    def set_up_home_button(self):
+        self.home_button_pic = pygame.image.load("data/pictures/buttons/menu1.png")
+        self.home_button_pic = pygame.transform.scale(self.home_button_pic, (40, 37))
+        self.home_button_rect = self.home_button_pic.get_rect()
+
+        self.home_button_rect.x = 67
+        self.home_button_rect.y = 55
 
     def set_up_restart_button(self):
-        self.restart_button_pic = pygame.image.load("data/pictures/buttons/restart_3.png")
-        self.restart_button_pic = pygame.transform.scale(self.restart_button_pic, (50, 46))
+        self.restart_button_pic = pygame.image.load("data/pictures/buttons/restart3.png")
+        self.restart_button_pic = pygame.transform.scale(self.restart_button_pic, (40, 37))
         self.restart_button_rect = self.restart_button_pic.get_rect()
 
-        self.restart_button_rect.x = 10
-        self.restart_button_rect.y = 50
+        self.restart_button_rect.x = 17
+        self.restart_button_rect.y = 55
 
     def set_up_texts(self):
         self.set_score_text()
