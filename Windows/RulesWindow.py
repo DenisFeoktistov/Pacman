@@ -12,28 +12,30 @@ class RulesWindow:
         self.set_font()
         self.set_back_button()
 
+        self.running = False
+
     def show(self):
         self.start_cycle()
 
     def start_cycle(self):
-        running = True
-        while running:
+        self.running = True
+        while self.running:
             self.time.tick(self.FPS)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.buttons_click_check(event.pos)
 
             self.set_up_screen()
 
             pygame.display.flip()
 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.buttons_click_check(event.pos)
+
     def buttons_click_check(self, mouse_pos):
         if self.back_button.collidepoint(mouse_pos):
+            self.running = False
             self.main_window.switch_to_menu()
-            return 0
 
     def set_up_screen(self):
         self.screen.fill((0, 0, 0))

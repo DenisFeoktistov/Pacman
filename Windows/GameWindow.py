@@ -17,26 +17,16 @@ class GameWindow:
 
         self.set_font()
 
+        self.running = False
+
     def show(self):
         self.restart()
         self.start_cycle()
 
     def start_cycle(self):
-        running = True
-        while running:
+        self.running = True
+        while self.running:
             self.time.tick(self.FPS)
-
-            for event in pygame.event.get():
-                self.game.handle(event)
-
-                if event.type == pygame.QUIT:
-                    self.main_window.switch_to_menu()
-                    return 0
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.buttons_click_check(event.pos)
-                if self.game.win:
-                    self.responder.game_ended()
-
             self.set_up_screen()
 
             self.draw_buttons()
@@ -44,6 +34,17 @@ class GameWindow:
             self.game.draw(self.screen)
 
             pygame.display.flip()
+
+            for event in pygame.event.get():
+                self.game.handle(event)
+
+                if event.type == pygame.QUIT:
+                    self.running = False
+                    self.main_window.switch_to_menu()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.buttons_click_check(event.pos)
+                if self.game.win:
+                    self.responder.game_ended()
 
     def draw_buttons(self):
         self.screen.blit(self.restart_button_pic, self.restart_button_rect)
@@ -56,6 +57,7 @@ class GameWindow:
         if self.restart_button_rect.collidepoint(mouse_pos):
             self.restart()
         if self.home_button_rect.collidepoint(mouse_pos):
+            self.running = False
             self.main_window.switch_to_menu()
 
     def set_up_screen(self):

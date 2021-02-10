@@ -12,24 +12,25 @@ class MenuWindow:
         self.set_font()
         self.set_buttons()
 
+        self.running = False
+
     def show(self):
         self.start_cycle()
 
     def start_cycle(self):
-        running = True
-        while running:
+        self.running = True
+        while self.running:
             self.time.tick(self.FPS)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    return 0
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.buttons_click_check(event.pos)
 
             self.set_up_screen()
 
             pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.buttons_click_check(event.pos)
 
     def set_buttons(self):
         self.set_play_button()
@@ -38,14 +39,18 @@ class MenuWindow:
 
     def buttons_click_check(self, mouse_pos):
         if self.play_button.collidepoint(mouse_pos):
+            self.running = False
             self.main_window.switch_to_game()
         if self.rules_button.collidepoint(mouse_pos):
+            self.running = False
             self.main_window.switch_to_rules()
         if self.leaders_button.collidepoint(mouse_pos):
+            self.running = False
             self.main_window.switch_to_score()
 
     def set_up_screen(self):
         self.screen.fill((0, 0, 0))
+
         self.draw_background()
         self.draw_buttons()
 
