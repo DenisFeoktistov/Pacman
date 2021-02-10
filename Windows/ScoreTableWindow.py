@@ -1,7 +1,7 @@
 import pygame
 
 
-class MenuWindow:
+class ScoreTableWindow:
     def __init__(self, main_window):
         self.main_window = main_window
         self.screen = self.main_window.screen
@@ -10,7 +10,7 @@ class MenuWindow:
 
         self.set_background()
         self.set_font()
-        self.set_play_button()
+        # self.set_play_button()
 
     def show(self):
         self.start_cycle()
@@ -31,6 +31,7 @@ class MenuWindow:
             pygame.display.flip()
 
     def buttons_click_check(self, mouse_pos):
+        #
         if self.play_button.collidepoint(mouse_pos):
             self.main_window.switch_to_game()
             return 0
@@ -51,15 +52,18 @@ class MenuWindow:
         self.background_rect = self.background_photo.get_rect()
 
     def draw_buttons(self):
+        #
         self.draw_play_button()
 
     def draw_play_button(self):
+        #
         self.screen.blit(self.text_play, self.play_button)
 
     def set_font(self):
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 30)
 
     def set_play_button(self):
+        #
         self.text_play = self.font.render('Играть', False, (255, 255, 255))
         self.play_button = self.text_play.get_rect()
         self.play_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 2)

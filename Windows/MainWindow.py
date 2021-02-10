@@ -3,6 +3,8 @@ import pygame
 
 from Windows.GameWindow import GameWindow
 from Windows.MenuWindow import MenuWindow
+from Windows.ScoreTableWindow import ScoreTableWindow
+from Windows.RulesWindow import RulesWindow
 
 
 class MainWindow:
@@ -15,6 +17,8 @@ class MainWindow:
 
         self.game_window = GameWindow(self)
         self.main_window = MenuWindow(self)
+        self.score_window = ScoreTableWindow(self)
+        self.rules_window = RulesWindow(self)
 
     def show(self):
         self.game_window.show()
@@ -24,3 +28,10 @@ class MainWindow:
 
     def switch_to_menu(self):
         self.main_window.show()
+
+    def switch_to_score(self):
+        self.score_window.show()
+
+    def switch_to_rules(self):
+        self.rules_window.show()
+

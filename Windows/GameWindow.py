@@ -33,7 +33,7 @@ class GameWindow:
                     self.main_window.switch_to_menu()
                     return 0
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.click_coords_check(event.pos)
+                    self.buttons_click_check(event.pos)
                 if self.game.win:
                     self.responder.game_ended()
 
@@ -52,7 +52,7 @@ class GameWindow:
     def restart(self):
         self.game.restart()
 
-    def click_coords_check(self, mouse_pos):
+    def buttons_click_check(self, mouse_pos):
         if self.restart_button_rect.collidepoint(mouse_pos):
             self.restart()
         if self.home_button_rect.collidepoint(mouse_pos):
