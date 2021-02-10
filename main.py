@@ -3,12 +3,12 @@ import pygame
 import sys
 
 
-from Windows.GameWindow import GameWindow
+from Windows.MainWindow import MainWindow
 
 
 class App:
     def __init__(self):
-        self.game = GameWindow()
+        self.game = MainWindow()
         self.game.show()
 
 

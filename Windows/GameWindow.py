@@ -5,32 +5,33 @@ from Responders.GameWindowResponder import GameWindowResponder
 
 
 class GameWindow:
-    SIZE = WIDTH, HEIGHT = 1000, 600
-    FPS = 120
+    def __init__(self, main_window):
+        self.main_window = main_window
+        self.screen = self.main_window.screen
+        self.time = self.main_window.time
+        self.FPS = self.main_window.FPS
 
-    def __init__(self):
         self.responder = GameWindowResponder(self)
 
-        self.screen = pygame.display.set_mode(GameWindow.SIZE)
         self.game = Game(self.screen)
 
         self.set_font()
 
     def show(self):
-        self.start_main_cycle()
+        self.start_cycle()
 
-    def start_main_cycle(self):
-        time = pygame.time.Clock()
-
+    def start_cycle(self):
         running = True
         while running:
-            time.tick(self.FPS)
+            self.time.tick(self.FPS)
 
             for event in pygame.event.get():
                 self.game.handle(event)
 
                 if event.type == pygame.QUIT:
                     running = False
+                    self.main_window.switch_to_menu()
+                    return 0
                 if self.restart_button_clicked(event):
                     self.restart()
                 if self.game.win:
