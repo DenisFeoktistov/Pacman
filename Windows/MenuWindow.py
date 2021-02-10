@@ -34,12 +34,15 @@ class MenuWindow:
     def set_buttons(self):
         self.set_play_button()
         self.set_rules_button()
+        self.set_leaders_button()
 
     def buttons_click_check(self, mouse_pos):
         if self.play_button.collidepoint(mouse_pos):
             self.main_window.switch_to_game()
         if self.rules_button.collidepoint(mouse_pos):
             self.main_window.switch_to_rules()
+        if self.leaders_button.collidepoint(mouse_pos):
+            self.main_window.switch_to_score()
 
     def set_up_screen(self):
         self.screen.fill((0, 0, 0))
@@ -58,6 +61,7 @@ class MenuWindow:
     def draw_buttons(self):
         self.screen.blit(self.text_rules, self.rules_button)
         self.screen.blit(self.text_play, self.play_button)
+        self.screen.blit(self.text_leaders, self.leaders_button)
 
     def set_play_button(self):
         self.text_play = self.font.render('Играть', False, (255, 255, 255))
@@ -67,7 +71,12 @@ class MenuWindow:
     def set_rules_button(self):
         self.text_rules = self.font.render('Правила', False, (255, 255, 255))
         self.rules_button = self.text_rules.get_rect()
-        self.rules_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 3)
+        self.rules_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 4 + 55)
+
+    def set_leaders_button(self):
+        self.text_leaders = self.font.render('Рекорды', False, (255, 255, 255))
+        self.leaders_button = self.text_leaders.get_rect()
+        self.leaders_button.center = (self.main_window.WIDTH // 2, self.main_window.HEIGHT // 4 + 110)
 
     def set_font(self):
         self.font = pygame.font.Font('data/fonts/pixel1.ttf', 40)
