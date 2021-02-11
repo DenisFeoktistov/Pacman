@@ -1,5 +1,5 @@
 from random import randint
-from GameFiles.SpritesClasses import GhostSprite
+from SubsidiaryFiles.SpritesClasses import GhostSprite
 
 
 class MazeGhost(GhostSprite):

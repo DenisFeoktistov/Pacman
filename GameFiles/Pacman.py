@@ -1,5 +1,5 @@
 import pygame
-from GameFiles.SpritesClasses import PacmanSprite
+from SubsidiaryFiles.SpritesClasses import PacmanSprite
 import SubsidiaryFiles.Sounds as Sounds
 
 

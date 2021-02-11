@@ -1,4 +1,4 @@
-from GameFiles.GeneralSprite import GeneralSprite
+from SubsidiaryFiles.GeneralSprite import GeneralSprite
 
 
 class PacmanSprite(GeneralSprite):
