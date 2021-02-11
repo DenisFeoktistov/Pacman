@@ -47,9 +47,10 @@ class Game:
         self.star_sprites = pygame.sprite.Group()
         for i in range(self.maze.height):
             for j in range(self.maze.width):
-                star = Star(i, j, width=8, maze=self.maze)
-                self.star_sprites.add(star)
-                self.stars.append(star)
+                if not (i == j == 0):
+                    star = Star(i, j, width=8, maze=self.maze)
+                    self.star_sprites.add(star)
+                    self.stars.append(star)
 
     def create_pacman(self):
         self.pacman = MazePacman(i=0, j=0, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 20, dead_cycle_time=12 * 40, maze=self.maze)
