@@ -2,7 +2,7 @@ from GameFiles.GeneralSprite import GeneralSprite
 
 
 class PacmanSprite(GeneralSprite):
-    SWITCHES_FOR_CYCLE = 4
+    SWITCHES_FOR_CYCLE = 3
     CYCLE_ITERATIONS = 12
 
     def __init__(self, x, y, sprite_size_x, sprite_size_y, cycle_time):
