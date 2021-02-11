@@ -106,6 +106,6 @@ class Game:
         for color, precision, min_way, recount_time, follow_pacman in info:
             i, j = self.responder.generate_ghost_place(min_way)
             self.ghosts.append(
-                MazeGhost(i=i, j=j, sprite_size_x=50, sprite_size_y=50, cycle_time=12 * 40, maze=self.maze,
+                MazeGhost(i=i, j=j, sprite_size_x=50, sprite_size_y=50, cycle_time=22 * 40, maze=self.maze,
                           color=color, max_precision=precision, recount_time=recount_time, follow_pacman=follow_pacman))
             self.ghost_sprites.add(self.ghosts[-1])

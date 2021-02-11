@@ -21,6 +21,7 @@ class ScoreTableWindow:
         self.running = False
 
     def show(self):
+        self.set_table()
         self.start_cycle()
 
     def start_cycle(self):
