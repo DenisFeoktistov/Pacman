@@ -24,9 +24,11 @@ class MainWindow:
         self.main_menu_window.show()
 
     def switch_to_game(self):
+        pygame.mixer.music.set_volume(0.05)
         self.game_window.show()
 
     def switch_to_menu(self):
+        pygame.mixer.music.set_volume(0.2)
         self.main_menu_window.show()
 
     def switch_to_score(self):

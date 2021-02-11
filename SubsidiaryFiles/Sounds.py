@@ -2,6 +2,9 @@ import pygame.mixer as mixer
 
 
 mixer.init()
+mixer.music.load('data/sounds/background_music.mp3')
+mixer.music.play(-1)
+mixer.music.set_volume(0.2)
 chomp_sound = mixer.Sound('data/sounds/pacman_chomp.wav')
 chomp_sound.set_volume(0.35)
 death_sound = mixer.Sound('data/sounds/pacman_death.wav')
