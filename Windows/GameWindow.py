@@ -93,10 +93,24 @@ class GameWindow:
         self.set_score_text()
         self.set_time_text()
         self.set_record_text()
+        if self.game.win:
+            self.set_win_text()
+            self.screen.blit(self.win_text, (440, 0))
+
+            if self.responder.is_record():
+                self.set_new_record_text()
+                self.screen.blit(self.new_record_text, (450, 50))
 
         self.screen.blit(self.score_text, (17, 0))
         self.screen.blit(self.time_text, (737, 0))
         self.screen.blit(self.record_time_text, (807, 60))
+
+    def set_new_record_text(self):
+        font = pygame.font.Font('data/fonts/pixel1.ttf', 30)
+        self.new_record_text = font.render(f'New record!', True, (230, 230, 250))
+
+    def set_win_text(self):
+        self.win_text = self.font.render(f'You win!', True, (230, 230, 250))
 
     def set_score_text(self):
         score = self.responder.get_score()

@@ -22,6 +22,12 @@ class GameWindowResponder:
     def get_record_seconds(self):
         return self.data_base_responder.get_time_list()[0].second % 60
 
+    def is_record(self):
+        minutes = self.get_minutes()
+        seconds = self.get_seconds()
+        time = dt.time(minute=minutes, second=seconds)
+        return time == self.data_base_responder.get_time_list()[0]
+
     def game_ended(self):
         minutes = self.get_minutes()
         seconds = self.get_seconds()
