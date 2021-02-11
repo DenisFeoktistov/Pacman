@@ -115,7 +115,7 @@ class Maze:
         answer = list()
 
         actual = i, j  # Sometimes I use i, j, because [i][j] is better than [actual[0]][actual[1]]. Yes, it would be
-        # better, but int this code part it can only make code less readable.
+        # better, but in this code part it can only make code less readable.
         if self.has_left_cell(*actual):
             if not self.matrix[i][j].get_left_border() and not self.get_left_cell(*actual).get_right_border():
                 answer.append((i, j - 1))
@@ -155,6 +155,10 @@ class Maze:
 
     def remove_some_boards_for_cell(self, i, j):
         # Maybe it is a little bit strange, but I don't find a way to improve it
+
+        # It is hard to tell all algorithm logic, but I will try. In this method we delete some boards from vertexes we
+        # can reach from start vertex to vertexes that we can't reach. We need it, 'cause sometimes algorithm could
+        # not work without it.
         chance = self.density
         values = [random.choices([True, False], weights=[chance, 100 - chance], k=1)[0] for _ in range(4)]
 
@@ -214,6 +218,7 @@ class Maze:
         return self.matrix[i + 1][j]
 
     def way(self, i1, j1, i2, j2):
+        # It is BFS, actually
         way = list()
 
         visited = [[False for j in range(self.width)] for i in range(self.height)]

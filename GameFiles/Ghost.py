@@ -3,7 +3,8 @@ from SubsidiaryFiles.SpritesClasses import GhostSprite
 
 
 class MazeGhost(GhostSprite):
-    def __init__(self, i, j, sprite_size_x, sprite_size_y, cycle_time, color, max_precision, recount_time, follow_pacman, maze):
+    def __init__(self, i, j, sprite_size_x, sprite_size_y, cycle_time, color, max_precision, recount_time,
+                 follow_pacman, maze):
         self.i = i
         self.j = j
         self.maze = maze

@@ -93,8 +93,7 @@ class GeneralSprite(pygame.sprite.Sprite):
             self.start_cycle(x, y, frames, self.cycle_time, self.cycle_iterations, self.switches_for_cycle)
 
     def in_cycle(self):
-        # returning bool is ok as attribute, because it is primitive type and returning value isn't a link, but it is
-        # better, we think, to use methods
+        # returning bool is ok as attribute, but method is a bit better, in our opinion
         return self.cycle
 
     def start_cycle(self, x, y, frames, cycle_time, cycle_iterations, switches_for_cycle):

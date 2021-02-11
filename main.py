@@ -21,4 +21,6 @@ if __name__ == '__main__':
     game = App()
 
     pygame.quit()
+    pygame.font.quit()
+    pygame.mixer.quit()
     sys.exit(app.exec())
